@@ -77,12 +77,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\include;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\include;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\lib;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -95,12 +95,12 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\include;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\include;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\lib;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window.lib;sfml-system.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -111,12 +111,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\include;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\include;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\lib;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -129,12 +129,12 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\include;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\include;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Box2D\lib;D:\ITI\Game Programming Intake 46\Mini Jam\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window.lib;sfml-system.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
