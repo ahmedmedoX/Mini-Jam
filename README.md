@@ -1,9 +1,9 @@
 Game Features
 -
-- Map Rotation
-- Player Movement
+- ~~Map Rotation~~
+- ~~Player Movement~~
 - Collect Items
-- Pull-Push
+- ~~Pull-Push~~
 - Teleport
 
 Audio
