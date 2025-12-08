@@ -3,10 +3,7 @@
 using namespace std;
 
 BoxCollider::BoxCollider(const float width,
-    const float height,
-    const float friction,
-    b2World &world,
-    const b2Vec2 Position,
+    const float height, const float friction, b2World &world, const b2Vec2 Position,
     const bool dynamic
 )
 {
@@ -14,7 +11,7 @@ BoxCollider::BoxCollider(const float width,
     def.type = dynamic ? b2_dynamicBody : b2_staticBody;
 
     body = world.CreateBody(&def);
-    shape.SetAsBox(width / 2.0f, height / 2.0f);
+    shape.SetAsBox(width / 2.0f, height / 2.0f, Position, 0.0f);
 
     fixtureDef.shape = &shape;
     fixtureDef.friction = friction;

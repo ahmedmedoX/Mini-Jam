@@ -1,91 +1,105 @@
-#include "GameObject.h"
 #include "Rotator.h"
-using namespace sf;
-inline float degToRad(float deg)
-{
-    return deg * 3.14159265f / 180.f;
-}
+#include "Background.h"
 
-float rotationAmount = degToRad(90.f);
+using namespace sf;
 
 int main() {
     b2World* world = new b2World(b2Vec2(0, 9.8f));
 
-    const float timeStep = 1.0f / (float)Utilities::FPS;
-
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
-
-    Clock clock;
+    Clock DeltaClock;
+    Clock RotationClock;
     float deltaTime = 0;
+    float RotationdeltaTime = 0;
 
     RenderWindow window(VideoMode(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT), "SFML Box2D Physics!");
     window.setFramerateLimit(Utilities::FPS);
 
-    Texture tex;
-    tex.loadFromFile("D:/ITI/Game Programming Intake 46/OOP for Game Development/SFML Project/Textures/Environment/Rock_Tile.png");
+    Texture Background_Texture;
+    Background_Texture.loadFromFile("D:/ITI/Game Programming Intake 46/Mini Jam/Mini-Jam/MiniJam_Team05/Map.jfif");
+    Background background(&Background_Texture);
 
-    Vector2f x(400.0f, 400.0f);
-    GameObject obj(Utilities::Convert_SFML_Box2D_Space(x), *world, &tex, 4.0f, 4.0f, 0.0f);
-
-    vector<GameObject*> rotatableObjects;
+    vector<GameObject*> Environment;
     Rotator rotator;
-    float ROOM_W = 900.f;
-    float ROOM_H = 900.f;
-    float WALL = 40.f;
 
-    float ROOM_X = (1600.f - ROOM_W) / 2.f;
-    float ROOM_Y = 0.f;
-    rotatableObjects.push_back(&obj);
-    float totalRotation = 0.f;
-    float rotationSpeed = 2.0f;
+    GameObject floor(Utilities::Convert_SFML_Box2D_Space(
+        Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT)), *world,
+        800 / Utilities::PIXELS_PER_UNIT, 150 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+
+    GameObject roof(Utilities::Convert_SFML_Box2D_Space(
+        Vector2f(Utilities::WINDOW_WIDTH / 2, 0)), *world,
+        800 / Utilities::PIXELS_PER_UNIT, 150 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+
+    GameObject leftWall(Utilities::Convert_SFML_Box2D_Space(
+        Vector2f(0, Utilities::WINDOW_HEIGHT / 2)), *world,
+        150 / Utilities::PIXELS_PER_UNIT, 800 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+
+    GameObject rightWall(Utilities::Convert_SFML_Box2D_Space(
+        Vector2f(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT / 2)), *world,
+        150 / Utilities::PIXELS_PER_UNIT, 800 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+
+    Environment.push_back(&floor);
+    Environment.push_back(&roof);
+    Environment.push_back(&leftWall);
+    Environment.push_back(&rightWall);
+
+    b2Vec2 roomCenter(0, 0);
+
     bool rotating = false;
-    b2Vec2 roomCenter(
-        (ROOM_X + ROOM_W / 2.f) / Utilities::PIXELS_PER_UNIT,
-        (ROOM_H / 2.f) / Utilities::PIXELS_PER_UNIT
-    );
-    float M_PI = 3.14f;
-    float targetRotation = 0;
-    float rotationAmount = 0.2f;
+    float targetRotation = 0.0f;
+    float totalRotation = 0.0f;
+    const float rotationSpeed = 2.0f;
+    const float rotationAngle = Utilities::Degree_to_Radian(90.0f);
 
-    while (window.isOpen())
-    {
+    const float timeStep = 1.0f / (float)Utilities::FPS;
+
+    const int32 velocityIterations = 6;
+    const int32 positionIterations = 2;
+
+    while (window.isOpen()) {
+
         Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
                 window.close();
         }
 
-        if (!rotating)
-        {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
-            {
+        if (!rotating) {
+            if (RotationClock.getElapsedTime().asSeconds() >= 2.0f) {
                 rotating = true;
                 totalRotation = 0.f;
-                targetRotation = rotationAmount;
+                targetRotation = rotationAngle;
             }
         }
 
-
-        if (rotating)
-        {
+        if (rotating) {
             float angleStep = rotationSpeed * deltaTime;
-
-            // If rotating too far, clamp to target exactly
             if (totalRotation + angleStep >= targetRotation)
             {
                 angleStep = targetRotation - totalRotation;
                 rotating = false;
+                RotationClock.restart();
             }
             totalRotation += angleStep;
-            rotator.RotatLevel(rotatableObjects, *world, roomCenter, angleStep);
+            rotator.RotateLevel(Environment, *world, roomCenter, angleStep);
+            background.Update(angleStep);
         }
-        world->Step(1 / 60.f, 8, 3);
-        obj.Update();
+
+        if (DeltaClock.getElapsedTime().asSeconds() > timeStep) {
+            world->Step(timeStep, velocityIterations, positionIterations);
+            deltaTime = DeltaClock.restart().asSeconds();
+        }
+
+        for (int i = 0; i < Environment.size(); i++) {
+            Environment[i]->Update();
+        }
 
         window.clear();
-        obj.Draw(window);
+
+        for (int i = 0; i < Environment.size(); i++) {
+            Environment[i]->Draw(window);
+        }
+        background.Draw(window);
+
         window.display();
     }
 

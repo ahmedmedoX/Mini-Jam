@@ -15,3 +15,11 @@ b2Vec2 Utilities::Convert_SFML_Box2D_Space(const Vector2f position) {
     newPosition.y = ((WINDOW_HEIGHT / 2.0f) - position.y) / PIXELS_PER_UNIT;
     return newPosition;
 }
+
+float Utilities::Degree_to_Radian(float angle) {
+    return angle * PI / 180.f;
+}
+
+float Utilities::Radian_to_Degree(float angle) {
+    return angle * 180.0f / (float)PI;
+}
