@@ -6,7 +6,7 @@ bin-release/
 
 # Other files and folders
 .settings/
-
+MiniJam_Team05/.vs
 # Executables
 *.swf
 *.air

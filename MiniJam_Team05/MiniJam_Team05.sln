@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniJam_Team05", "MiniJam_Team05.vcxproj", "{FAAADA95-76D9-496B-B065-052FF5C75DFE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Debug|x64.ActiveCfg = Debug|x64
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Debug|x64.Build.0 = Debug|x64
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Debug|x86.ActiveCfg = Debug|Win32
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Debug|x86.Build.0 = Debug|Win32
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Release|x64.ActiveCfg = Release|x64
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Release|x64.Build.0 = Release|x64
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Release|x86.ActiveCfg = Release|Win32
+		{FAAADA95-76D9-496B-B065-052FF5C75DFE}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77C809BF-C3C6-4F81-BED3-7D26D3A99F6B}
+	EndGlobalSection
+EndGlobal
