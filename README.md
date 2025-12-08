@@ -12,8 +12,7 @@ Audio
 - Animation
 
 Finished
-
-~~Old item~~
+- ~~Old item~~
 
 To Do
 - New item
