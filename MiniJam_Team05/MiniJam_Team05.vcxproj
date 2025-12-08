@@ -111,12 +111,12 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\include;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Chaos\mini_jam\Box2D\include;E:\Chaos\mini_jam\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Chaos\mini_jam\Box2D\library;E:\Chaos\mini_jam\SFML\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -140,6 +140,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FileName.cpp" />
+    <ClCompile Include="Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
