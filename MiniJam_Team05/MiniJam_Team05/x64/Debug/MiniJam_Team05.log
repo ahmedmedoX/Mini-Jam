@@ -1,2 +1,6 @@
-﻿  FileName.cpp
-  MiniJam_Team05.vcxproj -> D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe
+﻿  main.cpp
+  RandomLevelRotator.cpp
+  Rotator.cpp
+  Generating Code...
+  LINK : D:\ITI\miniJam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe not found or not built by the last incremental link; performing full link
+  MiniJam_Team05.vcxproj -> D:\ITI\miniJam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe
