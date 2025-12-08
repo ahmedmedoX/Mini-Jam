@@ -74,7 +74,28 @@ void Player::Move(Direction dir)
 }
 void Player::Update(Direction dir , Control control) {
 
-	Move(dir);
+		if (control == Control::INTERACT && interacting && boxBody != nullptr)
+		{
+			float dirX = 0.0f;
+
+			if (dir == Direction::RIGHT)  dirX = 1.0f;
+			if (dir == Direction::LEFT)   dirX = -1.0f;
+			if (dirX == 0) return;
+
+			float gravity = world->GetGravity().y;
+
+			float pullForce = boxBody->GetMass() * gravity * 0.52f;  
+			float playerDrag = body->GetMass() * gravity * 0.52f;    
+
+			boxBody->ApplyForceToCenter(b2Vec2(pullForce * dirX, 0), true);
+			body->ApplyForceToCenter(b2Vec2(playerDrag * dirX, 0), true);
+		}
+
+	
+	else {
+		Move(dir);
+	}
+
 	b2Vec2 pos = body->GetPosition();
 	rectangle.setPosition(pos.x * scale, pos.y * scale);
 }

@@ -50,7 +50,7 @@ int main()
 
     b2FixtureDef boxFixture;
     boxFixture.shape = &boxShape;
-    boxFixture.density = 50.f;
+    boxFixture.density = 500.f;
     boxFixture.friction = 0.3f;
 	boxFixture.filter = boxFilter;  
     boxBody->CreateFixture(&boxFixture);
