@@ -2,6 +2,7 @@
 
 GameManager::GameManager()
     : m_window(VideoMode(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT), "SFML Box2D Physics!")
+    , player(*m_world, Utilities::PIXELS_PER_UNIT, b2Vec2(400, 100))
 {
     m_window.setFramerateLimit(Utilities::FPS);
 
@@ -35,6 +36,11 @@ GameManager::GameManager()
     m_box->setFillColor(Color::Green);
 
     m_deltaTime = 0.f;
+
+    dir = Direction::NOMOVE;
+    control = Control::NONE;
+
+    m_world->SetContactListener(&player);
 }
 
 GameManager::~GameManager() {}
@@ -44,21 +50,45 @@ void GameManager::Run() {
         HandleInput();
         Update();
         Draw();
-        if (CheckWin()) {
+        if (CheckLevelWin()) {
+            if (m_currentIndex >= m_levelData.size()) {
+                Win();
+                return;
+            }
             m_currentIndex++;
-            if (m_currentIndex < m_levelData.size())
-                SwitchLevel(m_currentIndex);
-            else
-                RestartLevel();
+            SwitchLevel(m_currentIndex);
         }
     }
 }
 
 void GameManager::HandleInput() {
-    sf::Event event;
+    Event event;
     while (m_window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed)
+        if (event.type == Event::Closed)
             m_window.close();
+
+        if (event.type == sf::Event::KeyPressed) {
+
+            if (event.key.code == sf::Keyboard::F) {
+                control = Control::INTERACT;
+            }
+
+            if (event.key.code == sf::Keyboard::A) {
+                dir = Direction::LEFT;
+            }
+            else if (event.key.code == sf::Keyboard::D) {
+                dir = Direction::RIGHT;
+            }
+        }
+        if (event.type == sf::Event::KeyReleased) {
+            if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) {
+                dir = Direction::NOMOVE;
+            }
+            if (event.key.code == sf::Keyboard::F) {
+                control = Control::NONE;
+            }
+        }
+
     }
     
     if (Keyboard::isKeyPressed(Keyboard::R)) {
@@ -82,6 +112,8 @@ void GameManager::Update() {
 
     if (m_box)
         m_box->Update();
+    player.Update(dir, control, m_deltaTime);
+
 }
 
 void GameManager::Draw() {
@@ -109,20 +141,31 @@ void GameManager::RestartLevel() {
     //m_world = std::make_unique<b2World>(b2Vec2(0.f, -9.8f));
 
     m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
-    m_box = std::make_unique<GameObject>(
-        Utilities::Convert_SFML_Box2D_Space(sf::Vector2f(400, 400)),
-        *m_world, 2.f, 2.f, 1.5f, true
-    );
-    m_box->setFillColor(sf::Color::Green);
+
+    m_box = make_unique<GameObject>(
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)),
+        *m_world, 2.f, 2.f, 1.5f, true);
+    m_box->setFillColor(Color::Green);
+
     m_deltaClock.restart();
     m_rotationClock.restart();
 }
 
-bool GameManager::CheckWin() {
+bool GameManager::CheckLevelWin() {
     // TODO: Replace with actual level win logic
     // Example: if player box reaches some position
     if (true) {
         
     }
     return false;
+}
+
+void GameManager::Win() {
+    // TODO: Replace with actual level win logic
+    // Example: if player box reaches some position
+
+}
+
+void GameManager::Death() {
+
 }

@@ -139,29 +139,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
+    <ClCompile Include="Enums.cpp" />
+    <ClCompile Include="EnvironmentObject.cpp" />
     <ClCompile Include="FileName.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Level_Forest.cpp" />
     <ClCompile Include="Level_Rock.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rotator.cpp" />
+    <ClCompile Include="SpriteLoader.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CircleCollider.h" />
+    <ClInclude Include="Enums.h" />
+    <ClInclude Include="EnvironmentObject.h" />
+    <ClInclude Include="FilePathes.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="Level_Forest.h" />
     <ClInclude Include="Level_Rock.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Rotator.h" />
+    <ClInclude Include="SpriteLoader.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

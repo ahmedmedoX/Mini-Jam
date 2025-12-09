@@ -1,4 +1,8 @@
 ﻿  FileName.cpp
   GameManager.cpp
+  Player.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Player.cpp(83,60): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Player.cpp(156,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Player.cpp(156,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating Code...
   MiniJam_Team05.vcxproj -> D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe

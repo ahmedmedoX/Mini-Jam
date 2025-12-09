@@ -2,6 +2,10 @@
 #include "Level_Rock.h"
 #include "Level_Forest.h"
 #include "LevelData.h"
+#include "Player.h"
+#include "EnvironmentObject.h"
+#include "Enums.h"  
+#include <list>
 
 class GameManager {
 public:
@@ -24,6 +28,11 @@ private:
 
     std::vector<LevelData> m_levelData;
     std::unique_ptr<Level> m_currentLevel;
+
+    Player player;
+    Direction dir;
+    Control control;
+
     int m_currentIndex = 0;
 
     void HandleInput();
@@ -31,5 +40,7 @@ private:
     void Draw();
     void SwitchLevel(int index);
     void RestartLevel();
-    bool CheckWin();
+    bool CheckLevelWin();
+    void Win();
+    void Death();
 };
