@@ -1,19 +1,14 @@
 #pragma once
 #include "Level_Rock.h"
 #include "Level_Forest.h"
-#include <functional>
-#include <string>
-
-struct LevelData {
-    std::function<std::unique_ptr<Level>(b2World&)> factory;
-};
+#include "LevelData.h"
 
 class GameManager {
 public:
     GameManager();
     ~GameManager();
-
     void Run();
+
 private:
     RenderWindow m_window;
     Clock m_deltaClock;

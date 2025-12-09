@@ -158,6 +158,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelData.h" />
     <ClInclude Include="Level_Forest.h" />
     <ClInclude Include="Level_Rock.h" />
     <ClInclude Include="Rotator.h" />
