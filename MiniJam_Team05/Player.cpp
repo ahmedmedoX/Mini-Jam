@@ -77,7 +77,7 @@ void Player::InitializeAnimations()
     textures[PULL] = &SpriteLoader::getTexture(playerPull);
     textures[FALL] = &SpriteLoader::getTexture(playerFall);
 
-    animations[IDLE] = Animation(textures[IDLE], { 2, 1 }, .8);
+    animations[IDLE] = Animation(textures[IDLE], { 4, 1 }, .8);
     animations[MOVE] = Animation(textures[MOVE], { 5, 1 }, animationRate);
     animations[PUSH] = Animation(textures[PUSH], { 2, 1 }, animationRate);
     animations[PULL] = Animation(textures[PULL], { 2, 1 }, animationRate);

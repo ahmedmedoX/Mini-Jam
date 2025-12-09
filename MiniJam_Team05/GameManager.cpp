@@ -1,5 +1,4 @@
 #include "GameManager.h"
-#include "Ground.h"
 
 GameManager::GameManager()
     : m_window(VideoMode(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT), "SFML Box2D Physics!")
@@ -10,19 +9,23 @@ GameManager::GameManager()
 
     player = std::make_unique<Player>(
         *m_world,
-        Utilities::PIXELS_PER_UNIT,                        
-        b2Vec2(400.f, 400.f)               
+        Utilities::PIXELS_PER_UNIT,
+        b2Vec2(400.f, 400.f)
     );
 
     shared_ptr rockTexture =make_shared<Texture>();
+    Texture* bgTexture =new Texture();
     rockTexture->loadFromFile("Map.jfif");
+    bgTexture->loadFromFile("Map.jfif");
     lvl = new Level_Rock(*m_world, rockTexture);
+    bg.setSize(Vector2f(640, 640));
+    bg.setPosition(Vector2f(80, 80));
+    bg.setTexture(bgTexture);
     //m_levelData.push_back({
     //    [rockTexture](b2World& world) {
     //        return make_unique<Level_Rock>(world, rockTexture);
     //    }
     //    });
-
 
     m_deltaTime = 0.f;
 
@@ -30,12 +33,28 @@ GameManager::GameManager()
     control = Control::NONE;
 
     m_world->SetContactListener(player.get());
-    //Ground g(*m_world, Vector2f(50, 500), Vector2f(0, 400), 0.5f);
-    //Ground g(*m_world, Vector2f(50, 500), Vector2f(0, 400), 0.5f);
-    //Ground g(*m_world, Vector2f(50, 500), Vector2f(0, 400), 0.5f);
+    Ground g1(*m_world, Vector2f(704.f, 64), Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT - 128), 0.5f);
+    Ground g2(*m_world, Vector2f(704.f, 64), Vector2f(Utilities::WINDOW_WIDTH / 2, 80), 0.5f);
+    Ground g3(*m_world, Vector2f(128 ,704), Vector2f(80, Utilities::WINDOW_HEIGHT / 2), 0.5f);
+    Ground g4(*m_world, Vector2f(128, 704), Vector2f(Utilities::WINDOW_WIDTH - 80, Utilities::WINDOW_HEIGHT / 2), 0.5f);
+    Ground g5(*m_world, Vector2f(64, 128), Vector2f(500 + 48, 64 + 80 + 64), 0.5f);
+
+    Texture* key_Tex = new Texture();
+    key_Tex->loadFromFile("assets/objects/key.png");
+
+    key.setSize(Vector2f(32, 32));
+    key.setPosition(Vector2f(400, 600));
+    key.setTexture(key_Tex);
+
+    Texture* box_Tex = new Texture();
+    box_Tex->loadFromFile("assets/objects/box.png");
+
+    boxx.setSize(Vector2f(64, 64));
+    boxx.setPosition(Vector2f(600-16, 600-16));
+    boxx.setTexture(box_Tex);
+
     m_currentIndex = 0;
     //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
-
 }
 
 GameManager::~GameManager() {}
@@ -116,12 +135,15 @@ void GameManager::Draw() {
 
     if (m_currentLevel)
         m_currentLevel->Draw(m_window);
-    lvl->Draw(m_window);
-
+    //lvl->Draw(m_window);
+    m_window.draw(bg);
     //if (m_box)
     //    m_box->Draw(m_window);
     m_window.draw(*player.get());
-    m_window.draw(groundRect);
+    m_window.draw(key);
+    m_window.draw(boxx);
+
+    //m_window.draw(groundRect);
     m_window.display();
 }
 

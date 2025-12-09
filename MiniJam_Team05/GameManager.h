@@ -6,6 +6,7 @@
 #include "EnvironmentObject.h"
 #include "Enums.h"  
 #include <list>
+#include "Ground.h"
 
 class GameManager {
 public:
@@ -29,6 +30,12 @@ private:
     std::vector<LevelData> m_levelData;
     std::unique_ptr<Level> m_currentLevel;
     Level_Rock* lvl;
+
+    RectangleShape bg;
+    RectangleShape key;
+    RectangleShape boxx;
+
+
     unique_ptr<Player> player;
     Direction dir;
     Control control;

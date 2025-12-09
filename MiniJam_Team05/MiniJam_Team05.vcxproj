@@ -148,6 +148,7 @@
     <ClCompile Include="FileName.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Level_Forest.cpp" />
     <ClCompile Include="Level_Rock.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="FilePathes.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Ground.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="Level_Forest.h" />

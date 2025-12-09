@@ -13,7 +13,7 @@ Background::Background(std::shared_ptr<sf::Texture> bg) {
 Background::~Background() {}
 
 void Background::Update(const float angle) {
-	Shape.setRotation(Shape.getRotation() - Utilities::Radian_to_Degree(angle));
+	//Shape.setRotation(Shape.getRotation() - Utilities::Radian_to_Degree(angle));
 }
 
 void Background::Draw(RenderWindow& window) {

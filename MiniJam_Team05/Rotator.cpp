@@ -22,5 +22,5 @@ void Rotator:: rotateBodyAround(b2Body* body, const b2Vec2& center, const float 
     const float xr = ((p.x - center.x) * c) - ((p.y - center.y) * s);
     const float yr = ((p.x - center.x) * s) + ((p.y - center.y) * c);
 
-    body->SetTransform({ center.x + xr, center.y + yr }, body->GetAngle() + angle);
+    //body->SetTransform({ center.x + xr, center.y + yr }, body->GetAngle() + angle);
 }
