@@ -11,11 +11,13 @@ Player::Player(b2World& world , float scale , b2Vec2 position, b2Filter groundFi
 	this->groundFilter = groundFilter;
 	this->boxFilter = boxFilter;
 
-	size = sf::Vector2f(100.0f, 100.0f);
+	size = sf::Vector2f(50.0f, 50.0f);
 	density = 1.0f;
 	friction = 0.3f;
 	velocity = 10.0f / scale;
 	animationRate = 0.1f;
+
+	filter.categoryBits = 0x0002;
 
 	SetBody();
 	SetFillter();
@@ -32,7 +34,7 @@ void Player::SetBody()
 }
 void Player::SetFillter()
 {
-	filter.categoryBits = 0x0002;
+
 	filter.maskBits = 0xFFFF & (groundFilter.categoryBits | boxFilter.categoryBits);
 }
 void Player::SetFixture()
@@ -61,6 +63,8 @@ void Player::InitializeAnimations()
 	pull = Animation(pullText, sf::Vector2u(1, 1), animationRate);
 	fall = Animation(fallText, sf::Vector2u(6, 1), animationRate);
 	die = Animation(dieText, sf::Vector2u(6, 1), animationRate);
+
+	sprite.setScale((size.x / idle.uvRect.width), (size.y / idle.uvRect.height));
 }
 
 void Player::Update(Direction dir , Control control, float deltaTime) {
@@ -73,9 +77,15 @@ void Player::Update(Direction dir , Control control, float deltaTime) {
 				return;
 
 			float gravity = world->GetGravity().y;
-
 			float pullForce = boxBody->GetMass() * gravity * 0.52f;  
-			float playerDrag = body->GetMass() * gravity * 0.52f;    
+			float playerDrag = body->GetMass() * gravity * 0.52f;  
+			b2Vec2 direction = boxBody->GetPosition() - body->GetPosition();
+			float dot = b2Dot(b2Vec2(direction.x , 0), b2Vec2(dirX, 0));
+
+			if(dot > 0 ) 
+				currentState = PUSH;
+			else 
+				currentState = PULL;
 
 			boxBody->ApplyForceToCenter(b2Vec2(pullForce * dirX, 0), true);
 			body->ApplyForceToCenter(b2Vec2(playerDrag * dirX, 0), true);
@@ -124,12 +134,13 @@ void Player::UpdateAnimation(float deltaTime , Direction dir) {
 			break;
 	}
 
-	sprite.setOrigin(animation->uvRect.width / 2, animation->uvRect.height / 2);
+	int dirVal = static_cast<int>(dir);
+	if (currentState == PULL)
+		dirVal *= -1;
 
+	sprite.setOrigin(animation->uvRect.width / 2, animation->uvRect.height / 2);
 	if(dir != Direction::NOMOVE)
-		sprite.setScale(static_cast<int>(dir) * (size.x / animation->uvRect.width), (size.y / animation->uvRect.height));
-	else
-	sprite.setScale((size.x / animation->uvRect.width), (size.y / animation->uvRect.height));
+		sprite.setScale(dirVal * (size.x / animation->uvRect.width), (size.y / animation->uvRect.height));
 
 	animation->Update(0, deltaTime);
 	sprite.setTextureRect(animation->uvRect);
