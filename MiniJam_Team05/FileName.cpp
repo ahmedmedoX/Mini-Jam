@@ -60,10 +60,12 @@ int main()
 
 
     Player player(world, SCALE, b2Vec2(400, 100) , groundFilter , boxFilter);
-	Direction dir = Direction::IDLE;
+	Direction dir = Direction::NOMOVE;
     Control control = Control::NONE;
 
 	world.SetContactListener(&player);
+
+	sf::Clock clock;
 
     while (window.isOpen())
     {
@@ -86,10 +88,9 @@ int main()
                     dir = Direction::RIGHT;
                 }
             }
-
             if (event.type == sf::Event::KeyReleased) {
                 if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) {
-					dir = Direction::IDLE;
+					dir = Direction::NOMOVE;
                 }
                 if (event.key.code == sf::Keyboard::F) {
                     control = Control::NONE;
@@ -97,10 +98,9 @@ int main()
 			}
 
         }
-
         world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
-		player.Update(dir , control);
+		float deltaTime = clock.restart().asSeconds();  
+		player.Update(dir , control , deltaTime);
 
 		b2Vec2 boxPosition = boxBody->GetPosition();
 		boxRect.setPosition(boxPosition.x * SCALE, boxPosition.y * SCALE);

@@ -2,17 +2,27 @@
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/box2d.h>
+#include "Animation.h"
 
 enum Direction
 {
-	LEFT,
-	RIGHT,
-	IDLE
+	LEFT = -1,
+	RIGHT = 1,
+	NOMOVE = 0
 };
 enum Control
 {
 	INTERACT,
 	NONE
+};
+enum States
+{
+	MOVE,
+	PUSH,
+	PULL,
+	FALL,
+	DIE,
+	IDLE,
 };
 
 class Player : public sf::Drawable ,  public b2ContactListener
@@ -23,19 +33,35 @@ private:
 
 	b2Body* boxBody;
 
-	sf::Texture* texture;
-	sf::Sprite sprite;
 	sf::RectangleShape rectangle;
 
 	b2Filter filter;
 	b2Filter groundFilter;
 	b2Filter boxFilter;
 
+	sf::Texture* idleText;
+	sf::Texture* runText;
+	sf::Texture* pushText;
+	sf::Texture* pullText;
+	sf::Texture* fallText;	
+	sf::Texture* dieText;
+
+	Animation idle;
+	Animation run;
+	Animation push;
+	Animation pull;
+	Animation fall;
+	Animation die;
+
+	States currentState;
+	sf::Sprite sprite;
+
 	sf::Vector2f size;
 	float density;
 	float friction;
 	float scale;
 	bool interacting;
+	float animationRate;
 
 public :
 	b2Body* body;
@@ -44,12 +70,14 @@ public :
 	void SetBody();
 	void SetFillter();
 	void SetFixture();	
-	void SetSprite();
-	void Update(Direction dir , Control control);
+	void InitializeAnimations();
+	void Update(Direction dir , Control control , float deltaTime);
 	void Move(Direction dir);
+	void UpdateAnimation(float deltaTime ,Direction dir);
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	~Player();
 	
 };
 

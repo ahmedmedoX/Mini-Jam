@@ -1,4 +1,9 @@
-﻿  Player.cpp
+﻿  FileName.cpp
+  Player.cpp
+E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(70,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(127,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(127,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   MiniJam_Team05.vcxproj -> E:\Chaos\mini_jam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

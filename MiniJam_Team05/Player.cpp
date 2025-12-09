@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include "SpriteLoader.h"
 
 Player::Player(b2World& world , float scale , b2Vec2 position, b2Filter groundFilter, b2Filter boxFilter)
 {
@@ -10,15 +11,16 @@ Player::Player(b2World& world , float scale , b2Vec2 position, b2Filter groundFi
 	this->groundFilter = groundFilter;
 	this->boxFilter = boxFilter;
 
-	size = sf::Vector2f(50.0f, 50.0f);
+	size = sf::Vector2f(100.0f, 100.0f);
 	density = 1.0f;
 	friction = 0.3f;
 	velocity = 10.0f / scale;
+	animationRate = 0.1f;
 
 	SetBody();
 	SetFillter();
 	SetFixture();
-	SetSprite();
+	InitializeAnimations();
 }
 
 void Player::SetBody()
@@ -44,43 +46,31 @@ void Player::SetFixture()
 	fixtureDef.filter = filter;
 	body->CreateFixture(&fixtureDef);
 }	
-
-void Player::SetSprite()
+void Player::InitializeAnimations()
 {
-	rectangle.setSize(size);
-	rectangle.setOrigin(size.x / 2, size.y / 2);
-	sf::Vector2f pos = sf::Vector2f(startPosition.x, startPosition.y);
-	rectangle.setPosition(pos);
-	rectangle.setFillColor(sf::Color::Magenta);
+	idleText = &SpriteLoader::getTexture(SpriteType::playerIdle);
+	runText = &SpriteLoader::getTexture(SpriteType::playerRun);
+	pushText = &SpriteLoader::getTexture(SpriteType::playerPush);
+	pullText = &SpriteLoader::getTexture(SpriteType::playerPull);
+	fallText = &SpriteLoader::getTexture(SpriteType::playerFall);
+	dieText = &SpriteLoader::getTexture(SpriteType::playerDie);
+
+	idle = Animation(idleText, sf::Vector2u(4,1), animationRate);
+	run = Animation(runText, sf::Vector2u(7, 1), animationRate);
+	push = Animation(pushText, sf::Vector2u(5, 1), animationRate);
+	pull = Animation(pullText, sf::Vector2u(1, 1), animationRate);
+	fall = Animation(fallText, sf::Vector2u(6, 1), animationRate);
+	die = Animation(dieText, sf::Vector2u(6, 1), animationRate);
 }
 
-void Player::Move(Direction dir)
-{
-	b2Vec2 vel = body->GetLinearVelocity();
+void Player::Update(Direction dir , Control control, float deltaTime) {
 
-	switch (dir) {
-	case LEFT:
-		vel.x = -velocity;
-		break;
-	case RIGHT:
-		vel.x = velocity;
-		break;
-	case IDLE:
-		vel.x = 0.0f;
-		break;
-	}
+	currentState = IDLE;
+	if (control == Control::INTERACT && interacting && boxBody != nullptr){
+		float dirX = static_cast<int>(dir);
 
-	body->SetLinearVelocity(vel);
-}
-void Player::Update(Direction dir , Control control) {
-
-		if (control == Control::INTERACT && interacting && boxBody != nullptr)
-		{
-			float dirX = 0.0f;
-
-			if (dir == Direction::RIGHT)  dirX = 1.0f;
-			if (dir == Direction::LEFT)   dirX = -1.0f;
-			if (dirX == 0) return;
+			if (dir == Direction::NOMOVE) 
+				return;
 
 			float gravity = world->GetGravity().y;
 
@@ -89,17 +79,63 @@ void Player::Update(Direction dir , Control control) {
 
 			boxBody->ApplyForceToCenter(b2Vec2(pullForce * dirX, 0), true);
 			body->ApplyForceToCenter(b2Vec2(playerDrag * dirX, 0), true);
-		}
-
-	
-	else {
-		Move(dir);
 	}
-
-	b2Vec2 pos = body->GetPosition();
-	rectangle.setPosition(pos.x * scale, pos.y * scale);
+	else if(dir != Direction::NOMOVE) {
+		Move(dir);
+		currentState = MOVE;
+	}
+	UpdateAnimation(deltaTime, dir);
+}
+void Player::Move(Direction dir)
+{
+	b2Vec2 vel = body->GetLinearVelocity();
+	vel.x = velocity * static_cast<int>(dir);
+	body->SetLinearVelocity(vel);
 }
 
+void Player::UpdateAnimation(float deltaTime , Direction dir) {
+	Animation* animation = &idle;
+	switch (currentState) {
+		case IDLE:
+			sprite.setTexture(*idleText);
+			animation = &idle;
+			break;
+		case MOVE:
+			sprite.setTexture(*runText);
+			animation = &run;
+			break;
+		case PUSH:
+			sprite.setTexture(*pushText);
+			animation = &push;
+			break;
+		case PULL:
+			sprite.setTexture(*pullText);
+			animation = &pull;
+			break;
+		case FALL:
+			sprite.setTexture(*fallText);
+			animation = &fall;
+			break;
+		case DIE:
+			sprite.setTexture(*dieText);
+			animation = &die;
+			break;
+		default:
+			break;
+	}
+
+	sprite.setOrigin(animation->uvRect.width / 2, animation->uvRect.height / 2);
+
+	if(dir != Direction::NOMOVE)
+		sprite.setScale(static_cast<int>(dir) * (size.x / animation->uvRect.width), (size.y / animation->uvRect.height));
+	else
+	sprite.setScale((size.x / animation->uvRect.width), (size.y / animation->uvRect.height));
+
+	animation->Update(0, deltaTime);
+	sprite.setTextureRect(animation->uvRect);
+	b2Vec2 pos = body->GetPosition();
+	sprite.setPosition(pos.x * scale, pos.y * scale);
+}
 void Player::BeginContact(b2Contact* contact)
 {
 	b2Filter filterA = contact->GetFixtureA()->GetFilterData();
@@ -122,6 +158,9 @@ void Player::EndContact(b2Contact* contact) {
 	}
 }
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(rectangle, states);
+	target.draw(sprite, states);
 };
+Player::~Player() {
+	world->DestroyBody(body);
+}
 
