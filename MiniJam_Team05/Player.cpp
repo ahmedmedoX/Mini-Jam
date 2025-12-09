@@ -14,7 +14,7 @@ Player::Player(b2World& world, float scale, b2Vec2 position)
     size = sf::Vector2f(32.f, 48.f);
     density = 1.0f;
     friction = 0.3f;
-    walkVelocity = 10.0f / scale;
+    walkVelocity = 50.0f / scale;
 	fallVelocity = 5.0f / scale;
 	velocity = walkVelocity;
     animationRate = 0.1f;
@@ -35,7 +35,7 @@ void Player::SetBody(b2World& world)
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(startPosition.x / scale, startPosition.y / scale);
-    bodyDef.fixedRotation = true;
+    //bodyDef.fixedRotation = true;
     body = world.CreateBody(&bodyDef);
 }
 

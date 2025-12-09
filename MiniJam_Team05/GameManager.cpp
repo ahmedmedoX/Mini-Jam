@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include "Ground.h"
 
 GameManager::GameManager()
     : m_window(VideoMode(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT), "SFML Box2D Physics!")
@@ -9,8 +10,8 @@ GameManager::GameManager()
 
     player = std::make_unique<Player>(
         *m_world,
-        1.0f,                          // your size
-        b2Vec2(400.f, 400.f)               // your spawn position
+        Utilities::PIXELS_PER_UNIT,                        
+        b2Vec2(400.f, 400.f)               
     );
 
     shared_ptr rockTexture =make_shared<Texture>();
@@ -34,26 +35,25 @@ GameManager::GameManager()
 
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(400.f / Utilities::PIXELS_PER_UNIT, 550.f / Utilities::PIXELS_PER_UNIT);
-
+    groundBodyDef.type = b2_staticBody;
     b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
     groundBody->SetSleepingAllowed(false);
-    groundBody->SetType(b2_staticBody);
 
     b2PolygonShape groundBox;
     groundBox.SetAsBox((800.f / 2) / Utilities::PIXELS_PER_UNIT, (40.f / 2) / Utilities::PIXELS_PER_UNIT);
 
     b2Filter groundFilter;
-    groundFilter.categoryBits = 0x0002;
+    groundFilter.categoryBits = 0x0001;
 
     b2FixtureDef groundFixture;
     groundFixture.shape = &groundBox;
-    groundFixture.friction = 0.7f;
+    groundFixture.friction = 0.3f;
     groundFixture.filter = groundFilter;
     groundBody->CreateFixture(&groundFixture);
     groundRect.setSize(sf::Vector2f(800.f, 40.f));
     groundRect.setOrigin(400.f, 20.f);
     groundRect.setPosition(400.f, 550.f);
-    groundRect.setFillColor(sf::Color::Green);
+    groundRect.setFillColor(Color::Green);
 }
 
 GameManager::~GameManager() {}

@@ -26,6 +26,7 @@ private:
 
 public:
 	b2Body* body;
+	EnvironmentObject(){}
 	EnvironmentObject(b2World& world, float scale, b2Vec2 position ,ObjectType type );
 	void SetBody();
 	void SetFixture();

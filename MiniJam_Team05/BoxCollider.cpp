@@ -1,4 +1,5 @@
 #include "BoxCollider.h"
+#include "Enums.h"
 
 using namespace std;
 
@@ -8,16 +9,17 @@ BoxCollider::BoxCollider(const float width,
 )
 {
     def.position.Set(Position.x, Position.y);
-    def.type = dynamic ? b2_dynamicBody : b2_kinematicBody;
+    def.type = dynamic ? b2_dynamicBody : b2_staticBody;
 
     body = world.CreateBody(&def);
-    shape.SetAsBox(width / 2.0f, height / 2.0f);
-    body->SetAngularDamping(0.1);
+    shape.SetAsBox((width / 2), (height / 2));
+    //body->SetAngularDamping(0.1);
     fixtureDef.shape = &shape;
     fixtureDef.friction = friction;
     fixtureDef.density = dynamic ? 1.0f : 0.0f;
     fixtureDef.filter.categoryBits = 0x0001;
-    fixtureDef.filter.maskBits = 0x0002 | 0x0001;
+    fixtureDef.filter.maskBits =
+        PLAYER | GROUND | KEY | SPIKE | DOOR | BOX;
     //body->SetBullet(true);
 
     body->CreateFixture(&fixtureDef);

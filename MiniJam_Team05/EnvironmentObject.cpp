@@ -17,7 +17,7 @@ EnvironmentObject::EnvironmentObject(b2World& world, float scale, b2Vec2 positio
     animationRate = 0.1f;
 
 	filter.categoryBits = type;
-	filter.maskBits = PLAYER|GROUND;
+    filter.maskBits = PLAYER | GROUND;
 
     SetBody();
     SetFixture();
