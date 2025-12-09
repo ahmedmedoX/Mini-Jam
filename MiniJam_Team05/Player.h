@@ -21,7 +21,6 @@ enum States
 	PUSH,
 	PULL,
 	FALL,
-	DIE,
 	IDLE,
 };
 
@@ -30,45 +29,36 @@ class Player : public sf::Drawable ,  public b2ContactListener
 private:
 	b2Vec2 startPosition;
 	b2World* world;
-
 	b2Body* boxBody;
 
-	sf::RectangleShape rectangle;
+	b2Fixture* footSensor;
 
 	b2Filter filter;
-	b2Filter groundFilter;
-	b2Filter boxFilter;
 
-	sf::Texture* idleText;
-	sf::Texture* runText;
-	sf::Texture* pushText;
-	sf::Texture* pullText;
-	sf::Texture* fallText;	
-	sf::Texture* dieText;
-
-	Animation idle;
-	Animation run;
-	Animation push;
-	Animation pull;
-	Animation fall;
-	Animation die;
+	std::map<States, Animation> animations;
+	std::map<States, sf::Texture*> textures;
 
 	States currentState;
 	sf::Sprite sprite;
 
 	sf::Vector2f size;
+	float walkVelocity;
+	float fallVelocity;
 	float density;
 	float friction;
 	float scale;
 	bool interacting;
 	float animationRate;
+	int footContacts = 0;
+	bool onGround = false;
+
+	int collectables = 0;
 
 public :
 	b2Body* body;
 	float velocity;
-	Player(b2World& world , float scale ,b2Vec2 position , b2Filter groundFilter , b2Filter boxFilter);
+	Player(b2World& world, float scale, b2Vec2 position);
 	void SetBody();
-	void SetFillter();
 	void SetFixture();	
 	void InitializeAnimations();
 	void Update(Direction dir , Control control , float deltaTime);
@@ -76,6 +66,7 @@ public :
 	void UpdateAnimation(float deltaTime ,Direction dir);
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
+	int GetCollectablesNumber();
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	~Player();
 	

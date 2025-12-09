@@ -1,8 +1,21 @@
-﻿  FileName.cpp
+﻿  EnvironmentObject.cpp
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(68,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(68,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,69): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,69): warning C4244:         with
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,69): warning C4244:         [
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,69): warning C4244:             T=unsigned int
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,69): warning C4244:         ]
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,43): warning C4244: 'argument': conversion from 'T' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,43): warning C4244:         with
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,43): warning C4244:         [
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,43): warning C4244:             T=unsigned int
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(80,43): warning C4244:         ]
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(97,64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\EnvironmentObject.cpp(97,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Player.cpp
-E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(74,14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(138,73): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(138,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(156,76): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+E:\Chaos\mini_jam\MiniJam_Team05\Player.cpp(156,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating Code...
   MiniJam_Team05.vcxproj -> E:\Chaos\mini_jam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe
   'pwsh.exe' is not recognized as an internal or external command,

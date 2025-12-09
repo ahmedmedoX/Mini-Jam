@@ -1,15 +1,21 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/box2d.h>
 #include "Player.h"
+#include "EnvironmentObject.h"
+#include "Enums.h"  
+#include <list>
 
 #define SCALE 30.f
 #define TIME_STEP 1.f / 60.f
 #define VELOCITY_ITERATIONS 8
 #define POSITION_ITERATIONS 3
 
+
 int main()
 {
+   
     sf::RenderWindow window(sf::VideoMode(800, 600), "Box2D + SFML");
+    std::list<EnvironmentObject> keys;
 
     b2Vec2 gravity(0.f, 9.8f/SCALE);
     b2World world(gravity);
@@ -37,29 +43,12 @@ int main()
     groundRect.setFillColor(sf::Color::Green);
 
 
-    b2BodyDef boxBodyDef;
-    boxBodyDef.type = b2_dynamicBody;
-    boxBodyDef.position.Set(400.f / SCALE, 100.f / SCALE);
-    b2Body* boxBody = world.CreateBody(&boxBodyDef);
-
-    b2PolygonShape boxShape;
-    boxShape.SetAsBox((40.f / 2) / SCALE, (40.f / 2) / SCALE);
-
-	b2Filter boxFilter;
-	boxFilter.categoryBits = 0x0004;
-
-    b2FixtureDef boxFixture;
-    boxFixture.shape = &boxShape;
-    boxFixture.density = 500.f;
-    boxFixture.friction = 0.3f;
-	boxFixture.filter = boxFilter;  
-    boxBody->CreateFixture(&boxFixture);
-    sf::RectangleShape boxRect(sf::Vector2f(40.f, 40.f));
-    boxRect.setOrigin(20.f, 20.f);
-    boxRect.setFillColor(sf::Color::Blue);
+	EnvironmentObject key(world, SCALE, b2Vec2(500, 500), ObjectType::KEY);
+	EnvironmentObject box(world, SCALE, b2Vec2(300, 500), ObjectType::BOX);
+	keys.push_back(key);
 
 
-    Player player(world, SCALE, b2Vec2(400, 100) , groundFilter , boxFilter);
+    Player player(world, SCALE, b2Vec2(400, 100) );
 	Direction dir = Direction::NOMOVE;
     Control control = Control::NONE;
 
@@ -101,14 +90,19 @@ int main()
         world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		float deltaTime = clock.restart().asSeconds();  
 		player.Update(dir , control , deltaTime);
-
-		b2Vec2 boxPosition = boxBody->GetPosition();
-		boxRect.setPosition(boxPosition.x * SCALE, boxPosition.y * SCALE);
-
-        window.clear();
+		box.Update(deltaTime);  
+        for (auto& it : keys)
+        {
+            it.Update(deltaTime);
+        }
+        window.clear(sf::Color::White);
         window.draw(groundRect);
         window.draw(player);
-		window.draw(boxRect);
+        for (auto& it : keys)
+        {
+			window.draw(it);    
+        }
+        window.draw(box);
         window.display();
     }
 

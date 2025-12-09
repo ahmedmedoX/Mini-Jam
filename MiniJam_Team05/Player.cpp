@@ -1,177 +1,241 @@
 #include "Player.h"
 #include <iostream>
 #include "SpriteLoader.h"
+#include "Enums.h"  
 
-Player::Player(b2World& world , float scale , b2Vec2 position, b2Filter groundFilter, b2Filter boxFilter)
+Player::Player(b2World& world, float scale, b2Vec2 position)
 {
-	this->world = &world;
-	this->scale = scale;
-	this->startPosition = position;
-	interacting = false;
-	this->groundFilter = groundFilter;
-	this->boxFilter = boxFilter;
+    this->world = &world;
+    this->scale = scale;
+    this->startPosition = position;
 
-	size = sf::Vector2f(50.0f, 50.0f);
-	density = 1.0f;
-	friction = 0.3f;
-	velocity = 10.0f / scale;
-	animationRate = 0.1f;
+    interacting = false;
+    boxBody = nullptr;
 
-	filter.categoryBits = 0x0002;
+    size = sf::Vector2f(32.f, 48.f);
+    density = 1.0f;
+    friction = 0.3f;
+    walkVelocity = 10.0f / scale;
+	fallVelocity = 5.0f / scale;
+	velocity = walkVelocity;
+    animationRate = 0.1f;
 
-	SetBody();
-	SetFillter();
-	SetFixture();
-	InitializeAnimations();
+    footContacts = 0;
+    onGround = false;
+
+    filter.categoryBits = PLAYER;  
+    filter.maskBits = GROUND | BOX| KEY
+        | SPIKE| DOOR;
+
+    SetBody();
+    SetFixture();
+    InitializeAnimations();
 }
 
 void Player::SetBody()
 {
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(startPosition.x/scale, startPosition.y/scale);
-	body = world->CreateBody(&bodyDef);
-}
-void Player::SetFillter()
-{
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(startPosition.x / scale, startPosition.y / scale);
+    bodyDef.fixedRotation = true;
 
-	filter.maskBits = 0xFFFF & (groundFilter.categoryBits | boxFilter.categoryBits);
+    body = world->CreateBody(&bodyDef);
 }
+
 void Player::SetFixture()
 {
-	b2PolygonShape boxShape;
-	boxShape.SetAsBox((size.x/2) /scale, (size.y/2) / scale );
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &boxShape;
-	fixtureDef.density = density ;
-	fixtureDef.friction = friction;
-	fixtureDef.filter = filter;
-	body->CreateFixture(&fixtureDef);
-}	
+    b2PolygonShape boxShape;
+    boxShape.SetAsBox((size.x / 2) / scale, (size.y / 2) / scale);
+
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &boxShape;
+    fixtureDef.density = density;
+    fixtureDef.friction = friction;
+    fixtureDef.filter = filter;
+
+    body->CreateFixture(&fixtureDef);
+
+    b2PolygonShape footShape;
+    footShape.SetAsBox(
+        (size.x / 2 - 5.f) / scale,   
+        2.f / scale,              
+        b2Vec2(0, (size.y / 2) / scale),
+        0.0f
+    );
+
+    b2FixtureDef footFixture;
+    footFixture.shape = &footShape;
+    footFixture.isSensor = true;        
+    footFixture.filter = filter;
+    footFixture.userData.pointer = 1;  
+
+    footSensor = body->CreateFixture(&footFixture);
+}
+
 void Player::InitializeAnimations()
 {
-	idleText = &SpriteLoader::getTexture(SpriteType::playerIdle);
-	runText = &SpriteLoader::getTexture(SpriteType::playerRun);
-	pushText = &SpriteLoader::getTexture(SpriteType::playerPush);
-	pullText = &SpriteLoader::getTexture(SpriteType::playerPull);
-	fallText = &SpriteLoader::getTexture(SpriteType::playerFall);
-	dieText = &SpriteLoader::getTexture(SpriteType::playerDie);
+    textures[IDLE] = &SpriteLoader::getTexture(playerIdle);
+    textures[MOVE] = &SpriteLoader::getTexture(playerRun);
+    textures[PUSH] = &SpriteLoader::getTexture(playerRun);
+    textures[PULL] = &SpriteLoader::getTexture(playerRun);
+    textures[FALL] = &SpriteLoader::getTexture(playerFall);
 
-	idle = Animation(idleText, sf::Vector2u(4,1), animationRate);
-	run = Animation(runText, sf::Vector2u(7, 1), animationRate);
-	push = Animation(pushText, sf::Vector2u(5, 1), animationRate);
-	pull = Animation(pullText, sf::Vector2u(1, 1), animationRate);
-	fall = Animation(fallText, sf::Vector2u(6, 1), animationRate);
-	die = Animation(dieText, sf::Vector2u(6, 1), animationRate);
+    animations[IDLE] = Animation(textures[IDLE], { 4, 1 }, animationRate);
+    animations[MOVE] = Animation(textures[MOVE], { 5, 1 }, animationRate);
+    animations[PUSH] = Animation(textures[PUSH], { 5, 1 }, animationRate);
+    animations[PULL] = Animation(textures[PULL], { 5, 1 }, animationRate);
+    animations[FALL] = Animation(textures[FALL], { 1, 1 }, animationRate);
 
-	sprite.setScale((size.x / idle.uvRect.width), (size.y / idle.uvRect.height));
+    sprite.setScale(size.x / animations[IDLE].uvRect.width,
+        size.y / animations[IDLE].uvRect.height);
 }
 
-void Player::Update(Direction dir , Control control, float deltaTime) {
+void Player::Update(Direction dir, Control control, float deltaTime)
+{
+    currentState = IDLE;
 
-	currentState = IDLE;
-	if (control == Control::INTERACT && interacting && boxBody != nullptr){
-		float dirX = static_cast<int>(dir);
+    bool horizontalMove = (dir == LEFT || dir == RIGHT);
+    int dirX = (dir == LEFT ? -1 : (dir == RIGHT ? 1 : 0));
 
-			if (dir == Direction::NOMOVE) 
-				return;
+    if (control == INTERACT && interacting && boxBody && onGround)
+    {
+        if (dirX != 0)
+        {
+            float gravity = fabs(world->GetGravity().y);
 
-			float gravity = world->GetGravity().y;
-			float pullForce = boxBody->GetMass() * gravity * 0.52f;  
-			float playerDrag = body->GetMass() * gravity * 0.52f;  
-			b2Vec2 direction = boxBody->GetPosition() - body->GetPosition();
-			float dot = b2Dot(b2Vec2(direction.x , 0), b2Vec2(dirX, 0));
+            float force = boxBody->GetMass() * gravity * 0.52f;
+            float drag = body->GetMass() * gravity * 0.52f;
 
-			if(dot > 0 ) 
-				currentState = PUSH;
-			else 
-				currentState = PULL;
+            float dx = boxBody->GetPosition().x - body->GetPosition().x;
 
-			boxBody->ApplyForceToCenter(b2Vec2(pullForce * dirX, 0), true);
-			body->ApplyForceToCenter(b2Vec2(playerDrag * dirX, 0), true);
-	}
-	else if(dir != Direction::NOMOVE) {
-		Move(dir);
-		currentState = MOVE;
-	}
-	UpdateAnimation(deltaTime, dir);
+            if ((dx > 0 && dirX > 0) || (dx < 0 && dirX < 0))
+                currentState = PUSH;
+            else
+                currentState = PULL;
+
+            boxBody->ApplyForceToCenter({ force * dirX, 0 }, true);
+            body->ApplyForceToCenter({ drag * dirX, 0 }, true);
+        }
+    }
+    else {
+        if (!onGround)
+        {
+            currentState = FALL;
+			velocity = fallVelocity;
+        }
+        else
+            velocity = walkVelocity;
+
+        if (horizontalMove)
+        {
+            Move(dir);
+            currentState = MOVE;
+        }
+       
+    }
+
+    UpdateAnimation(deltaTime, dir);
 }
+
 void Player::Move(Direction dir)
 {
-	b2Vec2 vel = body->GetLinearVelocity();
-	vel.x = velocity * static_cast<int>(dir);
-	body->SetLinearVelocity(vel);
+    b2Vec2 vel = body->GetLinearVelocity();
+    vel.x = velocity * (dir == LEFT ? -1 : 1);
+    body->SetLinearVelocity(vel);
 }
 
-void Player::UpdateAnimation(float deltaTime , Direction dir) {
-	Animation* animation = &idle;
-	switch (currentState) {
-		case IDLE:
-			sprite.setTexture(*idleText);
-			animation = &idle;
-			break;
-		case MOVE:
-			sprite.setTexture(*runText);
-			animation = &run;
-			break;
-		case PUSH:
-			sprite.setTexture(*pushText);
-			animation = &push;
-			break;
-		case PULL:
-			sprite.setTexture(*pullText);
-			animation = &pull;
-			break;
-		case FALL:
-			sprite.setTexture(*fallText);
-			animation = &fall;
-			break;
-		case DIE:
-			sprite.setTexture(*dieText);
-			animation = &die;
-			break;
-		default:
-			break;
-	}
+void Player::UpdateAnimation(float dt, Direction dir)
+{
+    Animation* animation = &animations[currentState];
+    sprite.setTexture(*textures[currentState]);
+	int scaleSign = sprite.getScale().x < 0 ? -1 : 1;
+   
+    if (dir != NOMOVE) scaleSign = (int)dir;
+    if (currentState == PULL) scaleSign = -scaleSign;
 
-	int dirVal = static_cast<int>(dir);
-	if (currentState == PULL)
-		dirVal *= -1;
+    sprite.setOrigin(animation->uvRect.width / 2, animation->uvRect.height / 2);
+    sprite.setScale(scaleSign * (size.x / animation->uvRect.width),
+        size.y / animation->uvRect.height);
 
-	sprite.setOrigin(animation->uvRect.width / 2, animation->uvRect.height / 2);
-	if(dir != Direction::NOMOVE)
-		sprite.setScale(dirVal * (size.x / animation->uvRect.width), (size.y / animation->uvRect.height));
+    animation->Update(0, dt);
+    sprite.setTextureRect(animation->uvRect);
 
-	animation->Update(0, deltaTime);
-	sprite.setTextureRect(animation->uvRect);
-	b2Vec2 pos = body->GetPosition();
-	sprite.setPosition(pos.x * scale, pos.y * scale);
+    b2Vec2 pos = body->GetPosition();
+    sprite.setPosition(pos.x * scale, pos.y * scale);
 }
+
 void Player::BeginContact(b2Contact* contact)
 {
-	b2Filter filterA = contact->GetFixtureA()->GetFilterData();
-	
-	if (filterA.categoryBits == boxFilter.categoryBits)
-	{
-		boxBody = contact->GetFixtureA()->GetBody();
-		interacting = true;
-		std::cout << "Begin Contact with Box A\n";
+    b2Fixture* fA = contact->GetFixtureA();
+    b2Fixture* fB = contact->GetFixtureB();
+
+    uint16 cA = fA->GetFilterData().categoryBits;
+    uint16 cB = fB->GetFilterData().categoryBits;
+
+
+    if(cA == SPIKE || cB == SPIKE)
+    {
+		std::cout << "Player hit spikes!" << std::endl;
+        return;
 	}
-}
-void Player::EndContact(b2Contact* contact) {
-	b2Filter filterA = contact->GetFixtureA()->GetFilterData();
-	
-	if (filterA.categoryBits == boxFilter.categoryBits)
-	{
-		boxBody = nullptr;
-		interacting = false;
-		std::cout << "End Contact with Box\n";
+
+    if(cA == DOOR || cB == DOOR)
+    {
+        std::cout << "Player reached the door!" << std::endl;
+        return;
 	}
+
+    if (cA == BOX)
+    {
+		std::cout << "Player interacting with box" << std::endl;
+        boxBody = fA->GetBody();
+        interacting = true;
+    }
+    else if (cB == BOX)
+    {
+        std::cout << "Player interacting with box" << std::endl;
+        boxBody = fB->GetBody();
+        interacting = true;
+    }
+
+    if (fA == footSensor || fB == footSensor)
+    {
+        footContacts++;
+        onGround = true;
+		std::cout << "Player on ground" << std::endl;
+    }
 }
-void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(sprite, states);
-};
-Player::~Player() {
-	world->DestroyBody(body);
+int Player::GetCollectablesNumber() {
+	return collectables;
 }
 
+void Player::EndContact(b2Contact* contact)
+{
+    b2Fixture* fA = contact->GetFixtureA();
+    b2Fixture* fB = contact->GetFixtureB();
+
+    uint16 cA = fA->GetFilterData().categoryBits;
+    uint16 cB = fB->GetFilterData().categoryBits;
+
+    if (cA == BOX|| cB == BOX)
+    {
+        boxBody = nullptr;
+        interacting = false;
+    }
+    if (fA == footSensor || fB == footSensor)
+    {
+        footContacts--;
+        if (footContacts <= 0)
+            onGround = false;
+    }
+}
+
+void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    target.draw(sprite, states);
+}
+
+Player::~Player()
+{
+
+}

@@ -13,7 +13,9 @@ enum SpriteType
 	playerPush,
 	playerPull,
 	playerFall,
-	playerDie,
+	keyIdle,
+	spikeSprite,
+	boxSprite,
     Null
 };
 class SpriteLoader {

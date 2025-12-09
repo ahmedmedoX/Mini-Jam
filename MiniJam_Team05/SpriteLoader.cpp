@@ -6,39 +6,30 @@ std::map<SpriteType, sf::Texture> SpriteLoader::textures;
 
 sf::Texture& SpriteLoader::getTexture(SpriteType spriteType)
 {
-    if (textures.find(spriteType) != textures.end())
-        return textures[spriteType];
+    auto it = textures.find(spriteType);
+    if (it != textures.end())
+        return it->second;
 
-    sf::Texture texture;
+    auto& tex = textures[spriteType];
     std::string path;
-    
-    if(spriteType == SpriteType::playerIdle)
+
+    switch (spriteType)
     {
-        path = FilePathes::playerIdle;
-    }
-    else if (spriteType == SpriteType::playerRun) {
-        path = FilePathes::playerRun;
-	}
-    else if(spriteType == SpriteType::playerPush) {
-        path = FilePathes::playerPush;
-    }
-    else if (spriteType == SpriteType::playerPull) {
-        path = FilePathes::playerPull;
-	}
-    else if(spriteType == SpriteType::playerFall) {
-        path = FilePathes::playerFall;
-    }
-    else if (spriteType == SpriteType::playerDie) {
-		path = FilePathes::playerDie;
-    }
-    else if(spriteType == SpriteType::playerSprite) {
-        path = FilePathes::player;
+    case SpriteType::playerIdle: path = FilePathes::playerIdle; break;
+    case SpriteType::playerRun:  path = FilePathes::playerRun;  break;
+    case SpriteType::playerPush: path = FilePathes::playerPush; break;
+    case SpriteType::playerPull: path = FilePathes::playerPull; break;
+    case SpriteType::playerFall: path = FilePathes::playerFall; break;
+    case SpriteType::playerSprite: path = FilePathes::player; break;
+	case SpriteType::boxSprite:  path = FilePathes::boxSprite;  break;
+	case SpriteType::spikeSprite:  path = FilePathes::spikeSprite;  break;
+    case SpriteType::keyIdle:  path = FilePathes::keyIdle;  break;
     }
 
+    if (!tex.loadFromFile(path))
+        std::cerr << "Failed to load texture: " << path << "\n";
 
-    texture.loadFromFile(path);
-    textures[spriteType] = texture;
-
-    return textures[spriteType];
+    return tex;
 }
+
 
