@@ -28,7 +28,7 @@ private:
 
     std::vector<LevelData> m_levelData;
     std::unique_ptr<Level> m_currentLevel;
-
+    Level_Rock* lvl;
     unique_ptr<Player> player;
     Direction dir;
     Control control;

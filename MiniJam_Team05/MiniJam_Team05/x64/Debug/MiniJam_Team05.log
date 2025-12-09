@@ -1,2 +1,13 @@
-﻿  BoxCollider.cpp
+﻿  GameManager.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244: 'argument': conversion from 'const unsigned int' to 'float', possible loss of data
+  (compiling source file 'GameManager.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56):
+      the template instantiation context (the oldest one first) is
+          D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\GameManager.cpp(11,19):
+          see reference to function template instantiation 'std::unique_ptr<Player,std::default_delete<Player>> std::make_unique<Player,_Ty&,const unsigned int&,b2Vec2,0>(_Ty &,const unsigned int &,b2Vec2 &&)' being compiled
+          with
+          [
+              _Ty=b2World
+          ]
+  
   MiniJam_Team05.vcxproj -> D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe

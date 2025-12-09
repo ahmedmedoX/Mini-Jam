@@ -16,15 +16,13 @@ GameManager::GameManager()
 
     shared_ptr rockTexture =make_shared<Texture>();
     rockTexture->loadFromFile("Map.jfif");
+    lvl = new Level_Rock(*m_world, rockTexture);
+    //m_levelData.push_back({
+    //    [rockTexture](b2World& world) {
+    //        return make_unique<Level_Rock>(world, rockTexture);
+    //    }
+    //    });
 
-    m_levelData.push_back({
-        [rockTexture](b2World& world) {
-            return make_unique<Level_Rock>(world, rockTexture);
-        }
-        });
-
-    m_currentIndex = 0;
-    m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 
     m_deltaTime = 0.f;
 
@@ -32,28 +30,12 @@ GameManager::GameManager()
     control = Control::NONE;
 
     m_world->SetContactListener(player.get());
+    //Ground g(*m_world, Vector2f(50, 500), Vector2f(0, 400), 0.5f);
+    //Ground g(*m_world, Vector2f(50, 500), Vector2f(0, 400), 0.5f);
+    //Ground g(*m_world, Vector2f(50, 500), Vector2f(0, 400), 0.5f);
+    m_currentIndex = 0;
+    //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(400.f / Utilities::PIXELS_PER_UNIT, 550.f / Utilities::PIXELS_PER_UNIT);
-    groundBodyDef.type = b2_staticBody;
-    b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
-    groundBody->SetSleepingAllowed(false);
-
-    b2PolygonShape groundBox;
-    groundBox.SetAsBox((800.f / 2) / Utilities::PIXELS_PER_UNIT, (40.f / 2) / Utilities::PIXELS_PER_UNIT);
-
-    b2Filter groundFilter;
-    groundFilter.categoryBits = 0x0001;
-
-    b2FixtureDef groundFixture;
-    groundFixture.shape = &groundBox;
-    groundFixture.friction = 0.3f;
-    groundFixture.filter = groundFilter;
-    groundBody->CreateFixture(&groundFixture);
-    groundRect.setSize(sf::Vector2f(800.f, 40.f));
-    groundRect.setOrigin(400.f, 20.f);
-    groundRect.setPosition(400.f, 550.f);
-    groundRect.setFillColor(Color::Green);
 }
 
 GameManager::~GameManager() {}
@@ -118,9 +100,9 @@ void GameManager::Update() {
         m_world->Step(timeStep, velocityIterations, positionIterations);
         m_deltaTime = m_deltaClock.restart().asSeconds();
     }
-
-    if (m_currentLevel)
-        m_currentLevel->Update(m_deltaTime, m_rotationClock, *m_world);
+    lvl->Update(m_deltaTime, m_rotationClock, *m_world);
+    //if (m_currentLevel)
+        //m_currentLevel->Update(m_deltaTime, m_rotationClock, *m_world);
 
     if (m_box)
         m_box->Update();
@@ -134,9 +116,10 @@ void GameManager::Draw() {
 
     if (m_currentLevel)
         m_currentLevel->Draw(m_window);
+    lvl->Draw(m_window);
 
-    if (m_box)
-        m_box->Draw(m_window);
+    //if (m_box)
+    //    m_box->Draw(m_window);
     m_window.draw(*player.get());
     m_window.draw(groundRect);
     m_window.display();
@@ -145,7 +128,7 @@ void GameManager::Draw() {
 void GameManager::SwitchLevel(int index) {
     if (index >= 0 && index < m_levelData.size()) {
         m_currentIndex = index;
-        m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
+        //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
         m_deltaClock.restart();
         m_rotationClock.restart();
     }
@@ -154,7 +137,7 @@ void GameManager::SwitchLevel(int index) {
 void GameManager::RestartLevel() {
     //m_world = std::make_unique<b2World>(b2Vec2(0.f, -9.8f));
 
-    m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
+    //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 
     m_box = make_unique<GameObject>(
         Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)),
