@@ -76,14 +76,14 @@ void Player::InitializeAnimations()
 {
     textures[IDLE] = &SpriteLoader::getTexture(playerIdle);
     textures[MOVE] = &SpriteLoader::getTexture(playerRun);
-    textures[PUSH] = &SpriteLoader::getTexture(playerRun);
-    textures[PULL] = &SpriteLoader::getTexture(playerRun);
+    textures[PUSH] = &SpriteLoader::getTexture(playerPush);
+    textures[PULL] = &SpriteLoader::getTexture(playerPull);
     textures[FALL] = &SpriteLoader::getTexture(playerFall);
 
-    animations[IDLE] = Animation(textures[IDLE], { 4, 1 }, animationRate);
+    animations[IDLE] = Animation(textures[IDLE], { 2, 1 }, .8);
     animations[MOVE] = Animation(textures[MOVE], { 5, 1 }, animationRate);
-    animations[PUSH] = Animation(textures[PUSH], { 5, 1 }, animationRate);
-    animations[PULL] = Animation(textures[PULL], { 5, 1 }, animationRate);
+    animations[PUSH] = Animation(textures[PUSH], { 2, 1 }, animationRate);
+    animations[PULL] = Animation(textures[PULL], { 2, 1 }, animationRate);
     animations[FALL] = Animation(textures[FALL], { 1, 1 }, animationRate);
 
     sprite.setScale(size.x / animations[IDLE].uvRect.width,
