@@ -5,7 +5,6 @@
 
 Player::Player(b2World& world, float scale, b2Vec2 position)
 {
-    this->world = &world;
     this->scale = scale;
     this->startPosition = position;
 
@@ -23,23 +22,21 @@ Player::Player(b2World& world, float scale, b2Vec2 position)
     footContacts = 0;
     onGround = false;
 
-    filter.categoryBits = PLAYER;  
-    filter.maskBits = GROUND | BOX| KEY
-        | SPIKE| DOOR;
+    filter.categoryBits = PLAYER;
+    filter.maskBits = GROUND | BOX | KEY | SPIKE | DOOR;
 
-    SetBody();
+    SetBody(world);
     SetFixture();
     InitializeAnimations();
 }
 
-void Player::SetBody()
+void Player::SetBody(b2World& world)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(startPosition.x / scale, startPosition.y / scale);
     bodyDef.fixedRotation = true;
-
-    body = world->CreateBody(&bodyDef);
+    body = world.CreateBody(&bodyDef);
 }
 
 void Player::SetFixture()
@@ -65,9 +62,9 @@ void Player::SetFixture()
 
     b2FixtureDef footFixture;
     footFixture.shape = &footShape;
-    footFixture.isSensor = true;        
+    footFixture.isSensor = true;
     footFixture.filter = filter;
-    footFixture.userData.pointer = 1;  
+    footFixture.userData.pointer = 1;
 
     footSensor = body->CreateFixture(&footFixture);
 }
@@ -101,10 +98,10 @@ void Player::Update(Direction dir, Control control, float deltaTime)
     {
         if (dirX != 0)
         {
-            float gravity = fabs(world->GetGravity().y);
+            float gravity = -9.8f;
 
-            float force = boxBody->GetMass() * gravity * 0.52f;
-            float drag = body->GetMass() * gravity * 0.52f;
+            float force = boxBody->GetMass() * gravity ;
+            float drag = 0;
 
             float dx = boxBody->GetPosition().x - body->GetPosition().x;
 

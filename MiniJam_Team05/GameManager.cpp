@@ -2,45 +2,58 @@
 
 GameManager::GameManager()
     : m_window(VideoMode(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT), "SFML Box2D Physics!")
-    , player(*m_world, Utilities::PIXELS_PER_UNIT, b2Vec2(400, 100))
 {
     m_window.setFramerateLimit(Utilities::FPS);
 
-    m_world = make_unique<b2World>(b2Vec2(0.f, -9.8f));
+    m_world = make_unique<b2World>(b2Vec2(0.f, 9.8f));
 
-    shared_ptr rockTexture = std::make_shared<sf::Texture>();
+    player = std::make_unique<Player>(
+        *m_world,
+        1.0f,                          // your size
+        b2Vec2(400.f, 400.f)               // your spawn position
+    );
+
+    shared_ptr rockTexture =make_shared<Texture>();
     rockTexture->loadFromFile("Map.jfif");
-
-    shared_ptr rockTexture1 = std::make_shared<sf::Texture>();
-    rockTexture1->loadFromFile("Cave Tile.png");
 
     m_levelData.push_back({
         [rockTexture](b2World& world) {
-            return std::make_unique<Level_Rock>(world, rockTexture);
+            return make_unique<Level_Rock>(world, rockTexture);
         }
-        });
-
-    m_levelData.push_back({
-    [rockTexture1](b2World& world) {
-        return std::make_unique<Level_Forest>(world, rockTexture1);
-    }
         });
 
     m_currentIndex = 0;
     m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
-
-    m_box = make_unique<GameObject>(
-        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)),
-        *m_world, 2.f, 2.f, 1.5f, true);
-
-    m_box->setFillColor(Color::Green);
 
     m_deltaTime = 0.f;
 
     dir = Direction::NOMOVE;
     control = Control::NONE;
 
-    m_world->SetContactListener(&player);
+    m_world->SetContactListener(player.get());
+
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(400.f / Utilities::PIXELS_PER_UNIT, 550.f / Utilities::PIXELS_PER_UNIT);
+
+    b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
+    groundBody->SetSleepingAllowed(false);
+    groundBody->SetType(b2_staticBody);
+
+    b2PolygonShape groundBox;
+    groundBox.SetAsBox((800.f / 2) / Utilities::PIXELS_PER_UNIT, (40.f / 2) / Utilities::PIXELS_PER_UNIT);
+
+    b2Filter groundFilter;
+    groundFilter.categoryBits = 0x0002;
+
+    b2FixtureDef groundFixture;
+    groundFixture.shape = &groundBox;
+    groundFixture.friction = 0.7f;
+    groundFixture.filter = groundFilter;
+    groundBody->CreateFixture(&groundFixture);
+    groundRect.setSize(sf::Vector2f(800.f, 40.f));
+    groundRect.setOrigin(400.f, 20.f);
+    groundRect.setPosition(400.f, 550.f);
+    groundRect.setFillColor(sf::Color::Green);
 }
 
 GameManager::~GameManager() {}
@@ -88,7 +101,6 @@ void GameManager::HandleInput() {
                 control = Control::NONE;
             }
         }
-
     }
     
     if (Keyboard::isKeyPressed(Keyboard::R)) {
@@ -112,8 +124,9 @@ void GameManager::Update() {
 
     if (m_box)
         m_box->Update();
-    player.Update(dir, control, m_deltaTime);
 
+    if (player)
+     player->Update(dir, control, m_deltaTime);
 }
 
 void GameManager::Draw() {
@@ -124,7 +137,8 @@ void GameManager::Draw() {
 
     if (m_box)
         m_box->Draw(m_window);
-
+    m_window.draw(*player.get());
+    m_window.draw(groundRect);
     m_window.display();
 }
 

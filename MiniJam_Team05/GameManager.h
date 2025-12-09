@@ -29,10 +29,10 @@ private:
     std::vector<LevelData> m_levelData;
     std::unique_ptr<Level> m_currentLevel;
 
-    Player player;
+    unique_ptr<Player> player;
     Direction dir;
     Control control;
-
+    RectangleShape groundRect;
     int m_currentIndex = 0;
 
     void HandleInput();

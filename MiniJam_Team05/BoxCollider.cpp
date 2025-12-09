@@ -16,8 +16,10 @@ BoxCollider::BoxCollider(const float width,
     fixtureDef.shape = &shape;
     fixtureDef.friction = friction;
     fixtureDef.density = dynamic ? 1.0f : 0.0f;
-    //fixtureDef.filter.categoryBits = 0x0001;
+    fixtureDef.filter.categoryBits = 0x0001;
+    fixtureDef.filter.maskBits = 0x0002 | 0x0001;
     //body->SetBullet(true);
+
     body->CreateFixture(&fixtureDef);
     body->SetSleepingAllowed(false);
 }
