@@ -13,6 +13,7 @@ public:
         b2World& world,
         const b2Vec2 Position,
         const bool dynamic);
+        //const unsigned int categoryBits
     ~BoxCollider();
     b2Vec2 GetPosition();
     float GetAngle();

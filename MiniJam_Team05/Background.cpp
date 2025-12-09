@@ -5,6 +5,9 @@ Background::Background(Texture* Background_Texture) {
 	Shape.setOrigin(Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT / 2));
 	Shape.setPosition(Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT / 2));
 	Shape.setTexture(Background_Texture);
+	if (true) {
+		Shape.setFillColor(Color(255, 255, 255, 126));
+	}
 }
 
 Background::~Background() {}

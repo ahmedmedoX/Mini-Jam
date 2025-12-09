@@ -4,7 +4,7 @@
 using namespace sf;
 
 int main() {
-    b2World* world = new b2World(b2Vec2(0, 9.8f));
+    b2World* world = new b2World(b2Vec2(0, -9.8f));
 
     Clock DeltaClock;
     Clock RotationClock;
@@ -23,25 +23,27 @@ int main() {
 
     GameObject floor(Utilities::Convert_SFML_Box2D_Space(
         Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT)), *world,
-        800 / Utilities::PIXELS_PER_UNIT, 150 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+        800 / Utilities::PIXELS_PER_UNIT, 160 / Utilities::PIXELS_PER_UNIT, 1.0f, false);
 
     GameObject roof(Utilities::Convert_SFML_Box2D_Space(
         Vector2f(Utilities::WINDOW_WIDTH / 2, 0)), *world,
-        800 / Utilities::PIXELS_PER_UNIT, 150 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+        800 / Utilities::PIXELS_PER_UNIT, 160 / Utilities::PIXELS_PER_UNIT, 1.0f, false);
 
     GameObject leftWall(Utilities::Convert_SFML_Box2D_Space(
         Vector2f(0, Utilities::WINDOW_HEIGHT / 2)), *world,
-        150 / Utilities::PIXELS_PER_UNIT, 800 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+        160 / Utilities::PIXELS_PER_UNIT, 800 / Utilities::PIXELS_PER_UNIT, 1.0f, false);
 
     GameObject rightWall(Utilities::Convert_SFML_Box2D_Space(
         Vector2f(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT / 2)), *world,
-        150 / Utilities::PIXELS_PER_UNIT, 800 / Utilities::PIXELS_PER_UNIT, 0.0f, false);
+        160 / Utilities::PIXELS_PER_UNIT, 800 / Utilities::PIXELS_PER_UNIT, 1.0f, false);
 
     Environment.push_back(&floor);
     Environment.push_back(&roof);
     Environment.push_back(&leftWall);
     Environment.push_back(&rightWall);
 
+    GameObject box(Utilities::Convert_SFML_Box2D_Space(
+        Vector2f(400, 400)), *world, 1, 1, 1.0f, true);
     b2Vec2 roomCenter(0, 0);
 
     bool rotating = false;
@@ -88,13 +90,14 @@ int main() {
             world->Step(timeStep, velocityIterations, positionIterations);
             deltaTime = DeltaClock.restart().asSeconds();
         }
-
+        box.Update();
         for (int i = 0; i < Environment.size(); i++) {
             Environment[i]->Update();
         }
 
         window.clear();
 
+        box.Draw(window);
         for (int i = 0; i < Environment.size(); i++) {
             Environment[i]->Draw(window);
         }

@@ -4,7 +4,7 @@ using namespace std;
 
 BoxCollider::BoxCollider(const float width,
     const float height, const float friction, b2World &world, const b2Vec2 Position,
-    const bool dynamic
+    const bool dynamic//, const unsigned int categoryBits 
 )
 {
     def.position.Set(Position.x, Position.y);
@@ -15,6 +15,9 @@ BoxCollider::BoxCollider(const float width,
 
     fixtureDef.shape = &shape;
     fixtureDef.friction = friction;
+    fixtureDef.density = dynamic ? 1.0f : 0.0f;
+    //fixtureDef.filter.categoryBits = 0x0001;
+
     body->CreateFixture(&fixtureDef);
     body->SetSleepingAllowed(false);
 }
