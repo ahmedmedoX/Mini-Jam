@@ -1,12 +1,16 @@
 #include "Rotator.h"
 
-void Rotator::RotateLevel(vector<GameObject*>& objects, b2World& world,
+void Rotator::RotateLevel(vector<std::unique_ptr<GameObject>>& objects, b2World& world,
     const b2Vec2& center, const float angle)
 {
-    for (int i = 0; i < objects.size(); i++)
-	{
-		rotateBodyAround(objects[i]->GetBody(), center, angle);
-	}
+    for (auto& obj : objects)
+    {
+        b2Body* body = obj->GetBody();
+        if (!body) continue;
+
+        if (body->GetType() == b2_kinematicBody || body->GetType() == b2_staticBody)
+            rotateBodyAround(body, center, angle); // safe
+    }
 }
 
 void Rotator:: rotateBodyAround(b2Body* body, const b2Vec2& center, const float angle) {

@@ -6,6 +6,6 @@ using namespace std;
 class Rotator {
 	void rotateBodyAround(b2Body* body, const b2Vec2& center, float angle);
 public:
-	void RotateLevel(vector<GameObject*>& objects, b2World& world,
+	void RotateLevel(vector<unique_ptr<GameObject>>& objects, b2World& world,
 		const b2Vec2& center, const float angle);
 };

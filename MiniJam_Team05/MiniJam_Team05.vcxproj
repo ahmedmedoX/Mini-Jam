@@ -143,7 +143,11 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="FileName.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Level_Forest.cpp" />
+    <ClCompile Include="Level_Rock.cpp" />
     <ClCompile Include="Rotator.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
@@ -151,7 +155,11 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="CircleCollider.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="Level_Forest.h" />
+    <ClInclude Include="Level_Rock.h" />
     <ClInclude Include="Rotator.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>

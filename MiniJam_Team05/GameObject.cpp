@@ -9,13 +9,10 @@ GameObject::GameObject(const b2Vec2 Position, b2World& world, const float width,
     Shape.setPosition(Utilities::Convert_Box2D_SFML_Space(Position));
 }
 
-GameObject::~GameObject(){
-    Collision_Box.~BoxCollider();
-}
+GameObject::~GameObject(){}
 
 void GameObject::Update() {
-    float angle = Collision_Box.GetAngle();
-    Shape.setRotation(angle * -180.f / 3.14f);
+    Shape.setRotation(Collision_Box.GetAngle() * -180.f / 3.14f);
     Shape.setPosition(Utilities::Convert_Box2D_SFML_Space(Collision_Box.GetPosition()));
 }
 

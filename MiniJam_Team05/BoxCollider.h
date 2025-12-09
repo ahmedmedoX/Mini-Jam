@@ -5,7 +5,7 @@ class BoxCollider {
     b2BodyDef def;
     b2PolygonShape shape;
     b2FixtureDef fixtureDef;
-    b2Body* body;
+    b2Body* body = nullptr;
 public:
     BoxCollider(const float width,
         const float height,
