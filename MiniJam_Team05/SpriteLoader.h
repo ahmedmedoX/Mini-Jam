@@ -4,9 +4,7 @@
 #include <iostream>
 #include <map>
 
-
-enum SpriteType
-{
+enum SpriteType {
 	playerSprite,
 	playerIdle,
 	playerRun,
@@ -16,13 +14,15 @@ enum SpriteType
 	keyIdle,
 	spikeSprite,
 	boxSprite,
+	doorSprite,
+	Level1,
+	Level2,
+	//Level3,
     Null
 };
+
 class SpriteLoader {
+	static std::map<SpriteType, sf::Texture> textures;
 public:
     static sf::Texture& getTexture(SpriteType spriteType);
-
-private:
-	static std::vector<std::pair<SpriteType, sf::Color>> planetTextures;
-	static std::map<SpriteType, sf::Texture> textures;
 };

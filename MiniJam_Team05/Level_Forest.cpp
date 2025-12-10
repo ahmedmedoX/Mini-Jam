@@ -3,10 +3,17 @@
 Level_Forest::Level_Forest(b2World& world, Texture* Background_Texture) :
     Level(world, Background_Texture)
 {
-    //Environment.push_back(std::make_unique<GameObject>(
-    //    Vector2f(384 + 48, 64 + 80 + 64),
-    //    world, 64, 128,
-    //    2.0f, false));
+    Environment.push_back(make_unique<GameObject>(
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(500, 64 * 2.5f)),
+        world, 128.f / Utilities::PIXELS_PER_UNIT, 128.f / Utilities::PIXELS_PER_UNIT,
+        2.0f, false, GROUND));
+
+    Level_Key = make_unique<Key>(world,
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(500, 200)));
+
+    Level_Door = make_unique<Door>(world,
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(500, 500)));
 }
 
 Level_Forest::~Level_Forest() {}
+

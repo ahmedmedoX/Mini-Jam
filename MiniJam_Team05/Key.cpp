@@ -1,4 +1,5 @@
 #include "Key.h"
+
 Key::Key(b2World& world, b2Vec2 position)
     : BoxCollider(2.0f, 2.0f, 0.3f, world, position, false, KEY)
 {
@@ -9,8 +10,6 @@ Key::Key(b2World& world, b2Vec2 position)
     sprite.setOrigin(idle.uvRect.width / 2.0f, idle.uvRect.height / 2.0f);
     //sprite.setPosition(Utilities::Convert_Box2D_SFML_Space(GetPosition()));
 }
-
-Key::~Key() {}
 
 void Key::Update(float deltaTime) {
     UpdateAnimation(deltaTime);

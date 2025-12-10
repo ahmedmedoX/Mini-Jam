@@ -13,5 +13,5 @@ public:
 	void Update(float deltaTime);
 	void UpdateAnimation(float deltaTime);
 	void Draw(RenderWindow& window);
-	~Key();
+	~Key() noexcept = default;
 };

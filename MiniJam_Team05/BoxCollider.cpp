@@ -34,6 +34,7 @@ BoxCollider::~BoxCollider(){
 }
 
 b2Vec2 BoxCollider::GetPosition() {
+
     return body->GetPosition();
 }
 

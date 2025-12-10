@@ -43,14 +43,15 @@ void GameManager::Run() {
         HandleInput();
         Update();
         Draw();
-        if (CheckLevelWin()) {
-            if (m_currentIndex >= m_levelData.size()) {
-                Win();
-                return;
-            }
-            m_currentIndex++;
-            SwitchLevel(m_currentIndex);
-        }
+        CheckLevelWin();
+        //if (CheckLevelWin()) {
+        //    if (m_currentIndex >= m_levelData.size()) {
+        //        Win();
+        //        return;
+        //    }
+        //    m_currentIndex++;
+        //    SwitchLevel(m_currentIndex);
+        //}
     }
 }
 
@@ -86,11 +87,10 @@ void GameManager::HandleInput() {
     if (Keyboard::isKeyPressed(Keyboard::R)) {
         RestartLevel();
     }
-
-    if (Keyboard::isKeyPressed(Keyboard::N)) {
-        int next = (m_currentIndex + 1) % m_levelData.size();
-        SwitchLevel(next);
-    }
+    //if (Keyboard::isKeyPressed(Keyboard::N)) {
+    //    int next = (m_currentIndex + 1) % m_levelData.size();
+    //    SwitchLevel(next);
+    //}
 }
 
 void GameManager::Update() {
@@ -145,11 +145,19 @@ void GameManager::RestartLevel() {
 }
 
 bool GameManager::CheckLevelWin() {
-    // TODO: Replace with actual level win logic
-    // Example: if player box reaches some position
-    if (true) {
-        
+    Player* p = player.get();
+
+    if (!p->isKeyCollected())
+        return false;
+
+    m_currentLevel->CollectKey();
+
+    if (p->isDoorOpened()) {
+        int next = (m_currentIndex + 1) % m_levelData.size();
+        SwitchLevel(next);
+        RestartLevel();
     }
+
     return false;
 }
 

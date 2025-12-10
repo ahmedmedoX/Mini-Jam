@@ -103,8 +103,7 @@ void Player::Update(Direction dir, Control control, float deltaTime) {
             boxBody->ApplyForceToCenter({ force * dirX, 0 }, true);
             body->ApplyForceToCenter({ drag * dirX, 0 }, true);
         }
-    }
-    else {
+    } else {
         if (!onGround) {
             currentState = FALL;
             velocity = fallVelocity;
@@ -116,9 +115,7 @@ void Player::Update(Direction dir, Control control, float deltaTime) {
             Move(dir);
             currentState = MOVE;
         }
-
     }
-
     UpdateAnimation(deltaTime, dir);
 }
 
@@ -143,10 +140,7 @@ void Player::UpdateAnimation(const float dt, Direction dir) {
     animation->Update(0, dt);
     sprite.setTextureRect(animation->uvRect);
 
-    //b2Vec2 pos = body->GetPosition();
-    sprite.setPosition(
-        Utilities::Convert_Box2D_SFML_Space(body->GetPosition())
-    );
+    sprite.setPosition(Utilities::Convert_Box2D_SFML_Space(body->GetPosition()));
 }
 
 void Player::BeginContact(b2Contact* contact) {
@@ -163,6 +157,7 @@ void Player::BeginContact(b2Contact* contact) {
 
     if (cA == DOOR || cB == DOOR) {
         std::cout << "Player reached the door!" << std::endl;
+        is_Door_Opened = true;
         return;
     }
 
@@ -170,17 +165,15 @@ void Player::BeginContact(b2Contact* contact) {
         std::cout << "Player interacting with box" << std::endl;
         boxBody = fA->GetBody();
         interacting = true;
-    }
-
-    else if (cB == BOX) {
+    }else if (cB == BOX) {
         std::cout << "Player interacting with box" << std::endl;
         boxBody = fB->GetBody();
         interacting = true;
     }
 
     if (cA == KEY || cB == KEY) {
-        collectables++;
-        std::cout << "Player collected a key! Total keys: " << collectables << std::endl;
+        is_Key_Collected = true;
+        std::cout << "Player collected a key!" << std::endl;
     }
 
     if (fA == footSensor || fB == footSensor) {
@@ -188,10 +181,6 @@ void Player::BeginContact(b2Contact* contact) {
         onGround = true;
         std::cout << "Player on ground" << std::endl;
     }
-}
-
-int Player::GetCollectablesNumber() {
-    return collectables;
 }
 
 void Player::EndContact(b2Contact* contact) {
@@ -211,6 +200,17 @@ void Player::EndContact(b2Contact* contact) {
         if (footContacts <= 0)
             onGround = false;
     }
+}
+
+bool Player::isKeyCollected() {
+
+    return is_Key_Collected;
+}
+
+bool Player::isDoorOpened() {
+    if (is_Key_Collected && is_Door_Opened)
+        return true;
+    return false;
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {

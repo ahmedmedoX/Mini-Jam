@@ -35,12 +35,13 @@ Level::Level(b2World &world, Texture* Background_Texture) :
     Box_Texture = new Texture();
     Box_Texture->loadFromFile(FilePathes::boxSprite);
 
-    //Door_Texture= new Texture();
-    //Door_Texture->loadFromFile(FilePathes::door);
+    Door_Texture = new Texture();
+    Door_Texture->loadFromFile(FilePathes::doorSprite);
 }
 
 Level::~Level() {
     Environment.clear();
+    //Level_Key.reset();
 }
 
 void Level::Update(const float deltaTime, Clock& RotationClock, b2World& world) {
@@ -61,6 +62,7 @@ void Level::Update(const float deltaTime, Clock& RotationClock, b2World& world) 
         }
         totalRotation += angleStep;
         rotator.RotateLevel(Environment, world, roomCenter, angleStep);
+        rotator.RotateKey(Level_Key, world, roomCenter, angleStep);
         background.Update(angleStep);
     }
 
@@ -68,9 +70,11 @@ void Level::Update(const float deltaTime, Clock& RotationClock, b2World& world) 
         Environment[i]->Update();
     }
 
-    for (int i = 0; i < Keys.size(); i++) {
-        Keys[i]->Update(deltaTime);
-    }
+    if (Level_Key)
+        Level_Key->Update(deltaTime);
+
+    if (Level_Door)
+        Level_Door->Update(deltaTime);
 }
 
 void Level::Draw(RenderWindow& window) {
@@ -78,7 +82,14 @@ void Level::Draw(RenderWindow& window) {
     for (int i = 0; i < Environment.size(); i++) {
         Environment[i]->Draw(window);
     }
-    for (int i = 0; i < Keys.size(); i++) {
-        Keys[i]->Draw(window);
-    }
+    if(Level_Key)
+        Level_Key->Draw(window);
+
+    if(Level_Door)
+        Level_Door->Draw(window);
+}
+
+void Level::CollectKey() {
+    if(Level_Key)
+        Level_Key.reset();
 }

@@ -48,7 +48,8 @@ private:
 	float animationRate;
 	int footContacts = 0;
 	bool onGround = false;
-	int collectables = 0;
+	bool is_Key_Collected = false;
+	bool is_Door_Opened = false;
 
 public:
 	b2Body* body;
@@ -62,7 +63,8 @@ public:
 	void UpdateAnimation(const float deltaTime, Direction dir);
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
-	int GetCollectablesNumber();
+	bool isKeyCollected();
+	bool isDoorOpened();
 	void draw(RenderTarget& target, RenderStates states) const override;
 	~Player();
 };
