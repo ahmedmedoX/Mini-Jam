@@ -27,9 +27,6 @@
     <ClCompile Include="BoxCollider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CircleCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Rotator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,16 +51,13 @@
     <ClCompile Include="Enums.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnvironmentObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ground.cpp">
+    <ClCompile Include="Key.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -75,9 +69,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CircleCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rotator.h">
@@ -107,9 +98,6 @@
     <ClInclude Include="Enums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnvironmentObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FilePathes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -119,7 +107,7 @@
     <ClInclude Include="SpriteLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ground.h">
+    <ClInclude Include="Key.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

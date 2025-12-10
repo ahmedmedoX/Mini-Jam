@@ -3,10 +3,7 @@
 #include "Level_Forest.h"
 #include "LevelData.h"
 #include "Player.h"
-#include "EnvironmentObject.h"
-#include "Enums.h"  
 #include <list>
-#include "Ground.h"
 
 class GameManager {
 public:
@@ -25,22 +22,14 @@ private:
     const int32 velocityIterations = 8;
     const int32 positionIterations = 3;
 
-    unique_ptr<GameObject> m_box;
-
-    std::vector<LevelData> m_levelData;
-    std::unique_ptr<Level> m_currentLevel;
-    Level_Rock* lvl;
-
-    RectangleShape bg;
-    RectangleShape key;
-    RectangleShape boxx;
-
+    int m_currentIndex = 0;
+    vector<LevelData> m_levelData;
+    unique_ptr<Level> m_currentLevel;
+    //Level_Rock* lvl;
 
     unique_ptr<Player> player;
     Direction dir;
     Control control;
-    RectangleShape groundRect;
-    int m_currentIndex = 0;
 
     void HandleInput();
     void Update();

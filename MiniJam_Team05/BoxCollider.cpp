@@ -1,27 +1,27 @@
 #include "BoxCollider.h"
-#include "Enums.h"
 
 using namespace std;
 
 BoxCollider::BoxCollider(const float width,
     const float height, const float friction, b2World &world, const b2Vec2 Position,
-    const bool dynamic//, const unsigned int categoryBits 
+    const bool dynamic, ObjectType type
 )
 {
-    def.position.Set(Position.x, Position.y);
+    def.position = Position;
     def.type = dynamic ? b2_dynamicBody : b2_staticBody;
 
     body = world.CreateBody(&def);
     shape.SetAsBox((width / 2), (height / 2));
     fixtureDef.shape = &shape;
 
-    //body->SetAngularDamping(0.1);
+
     fixtureDef.friction = friction;
     fixtureDef.density = dynamic ? 1.0f : 0.0f;
-    fixtureDef.filter.categoryBits = 0x0001;
-    fixtureDef.filter.maskBits =0xFFFF; 
+    fixtureDef.filter.categoryBits = type;
+    fixtureDef.filter.maskBits = 0xFFFF;
 
     //body->SetBullet(true);
+    body->SetAngularDamping(0.1);
     body->SetSleepingAllowed(false);
     body->CreateFixture(&fixtureDef);
 }

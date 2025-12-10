@@ -1,6 +1,5 @@
 #pragma once
 #include "Rotator.h"
-#include "GameObject.h"
 #include "Background.h"
 
 class Level {
@@ -13,13 +12,16 @@ class Level {
     float totalRotation;
 
 protected:
-    std::vector<std::unique_ptr<GameObject>> Environment;
-    const float rotationSpeed = 1.0f;
-    const float rotationDelay = 2.0f;
+    vector<unique_ptr<GameObject>> Environment;
+    const float rotationSpeed = 0.8f;
+    const float rotationDelay = 3.0f;
     const float rotationAngle = Utilities::Degree_to_Radian(90.0f);
+    Texture* Key_Texture;
+    Texture* Box_Texture;
+    Texture* Door_Texture;
 
 public:
-    Level(b2World& world, std::shared_ptr<sf::Texture> bg);
+    Level(b2World& world, Texture* Background_Texture);
     ~Level();
 
     void Update(const float deltaTime, Clock& RotationClock, b2World& world);

@@ -4,7 +4,7 @@
 class Background {
 	RectangleShape Shape;
 public:
-	Background(std::shared_ptr<sf::Texture> bg);
+	Background(Texture* Background_Texture);
 	~Background();
 
 	void Update(const float angle);

@@ -5,27 +5,25 @@ GameManager::GameManager()
 {
     m_window.setFramerateLimit(Utilities::FPS);
 
-    m_world = make_unique<b2World>(b2Vec2(0.f, 9.8f));
+    m_world = make_unique<b2World>(b2Vec2(0, -9.8f));
 
     player = std::make_unique<Player>(
-        *m_world,
-        Utilities::PIXELS_PER_UNIT,
-        b2Vec2(400.f, 400.f)
-    );
+        *m_world, Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
 
-    shared_ptr rockTexture =make_shared<Texture>();
     Texture* bgTexture =new Texture();
-    rockTexture->loadFromFile("Map.jfif");
     bgTexture->loadFromFile("Map.jfif");
-    lvl = new Level_Rock(*m_world, rockTexture);
-    bg.setSize(Vector2f(640, 640));
-    bg.setPosition(Vector2f(80, 80));
-    bg.setTexture(bgTexture);
-    //m_levelData.push_back({
-    //    [rockTexture](b2World& world) {
-    //        return make_unique<Level_Rock>(world, rockTexture);
-    //    }
-    //    });
+
+    m_levelData.push_back({
+        [bgTexture](b2World& world) {
+            return make_unique<Level_Rock>(world, bgTexture);
+        }
+        });
+
+    m_levelData.push_back({
+        [bgTexture](b2World& world) {
+            return make_unique<Level_Forest>(world, bgTexture);
+        }
+        });
 
     m_deltaTime = 0.f;
 
@@ -33,28 +31,9 @@ GameManager::GameManager()
     control = Control::NONE;
 
     m_world->SetContactListener(player.get());
-    Ground g1(*m_world, Vector2f(704.f, 64), Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT - 128), 0.5f);
-    Ground g2(*m_world, Vector2f(704.f, 64), Vector2f(Utilities::WINDOW_WIDTH / 2, 80), 0.5f);
-    Ground g3(*m_world, Vector2f(128 ,704), Vector2f(80, Utilities::WINDOW_HEIGHT / 2), 0.5f);
-    Ground g4(*m_world, Vector2f(128, 704), Vector2f(Utilities::WINDOW_WIDTH - 80, Utilities::WINDOW_HEIGHT / 2), 0.5f);
-    Ground g5(*m_world, Vector2f(64, 128), Vector2f(500 + 48, 64 + 80 + 64), 0.5f);
-
-    Texture* key_Tex = new Texture();
-    key_Tex->loadFromFile("assets/objects/key.png");
-
-    key.setSize(Vector2f(32, 32));
-    key.setPosition(Vector2f(400, 600));
-    key.setTexture(key_Tex);
-
-    Texture* box_Tex = new Texture();
-    box_Tex->loadFromFile("assets/objects/box.png");
-
-    boxx.setSize(Vector2f(64, 64));
-    boxx.setPosition(Vector2f(600-16, 600-16));
-    boxx.setTexture(box_Tex);
 
     m_currentIndex = 0;
-    //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
+    m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 }
 
 GameManager::~GameManager() {}
@@ -119,12 +98,10 @@ void GameManager::Update() {
         m_world->Step(timeStep, velocityIterations, positionIterations);
         m_deltaTime = m_deltaClock.restart().asSeconds();
     }
-    lvl->Update(m_deltaTime, m_rotationClock, *m_world);
-    //if (m_currentLevel)
-        //m_currentLevel->Update(m_deltaTime, m_rotationClock, *m_world);
+    //lvl->Update(m_deltaTime, m_rotationClock, *m_world);
 
-    if (m_box)
-        m_box->Update();
+    if (m_currentLevel)
+        m_currentLevel->Update(m_deltaTime, m_rotationClock, *m_world);
 
     if (player)
      player->Update(dir, control, m_deltaTime);
@@ -135,22 +112,17 @@ void GameManager::Draw() {
 
     if (m_currentLevel)
         m_currentLevel->Draw(m_window);
-    //lvl->Draw(m_window);
-    m_window.draw(bg);
-    //if (m_box)
-    //    m_box->Draw(m_window);
-    m_window.draw(*player.get());
-    m_window.draw(key);
-    m_window.draw(boxx);
 
-    //m_window.draw(groundRect);
+    //lvl->Draw(m_window);
+
+    m_window.draw(*player.get());
     m_window.display();
 }
 
 void GameManager::SwitchLevel(int index) {
     if (index >= 0 && index < m_levelData.size()) {
         m_currentIndex = index;
-        //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
+        m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
         m_deltaClock.restart();
         m_rotationClock.restart();
     }
@@ -158,13 +130,15 @@ void GameManager::SwitchLevel(int index) {
 
 void GameManager::RestartLevel() {
     //m_world = std::make_unique<b2World>(b2Vec2(0.f, -9.8f));
+    m_world->SetContactListener(nullptr);
 
-    //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
+    m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 
-    m_box = make_unique<GameObject>(
-        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)),
-        *m_world, 2.f, 2.f, 1.5f, true);
-    m_box->setFillColor(Color::Green);
+    player.reset();
+    player = std::make_unique<Player>(
+        *m_world, Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
+
+    m_world->SetContactListener(player.get());
 
     m_deltaClock.restart();
     m_rotationClock.restart();
