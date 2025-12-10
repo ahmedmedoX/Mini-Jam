@@ -35,8 +35,8 @@ Level::Level(b2World &world, Texture* Background_Texture) :
     Box_Texture = new Texture();
     Box_Texture->loadFromFile(FilePathes::boxSprite);
 
-    Door_Texture= new Texture();
-    Door_Texture->loadFromFile(FilePathes::door);
+    //Door_Texture= new Texture();
+    //Door_Texture->loadFromFile(FilePathes::door);
 }
 
 Level::~Level() {
@@ -67,11 +67,18 @@ void Level::Update(const float deltaTime, Clock& RotationClock, b2World& world) 
     for (int i = 0; i < Environment.size(); i++) {
         Environment[i]->Update();
     }
+
+    for (int i = 0; i < Keys.size(); i++) {
+        Keys[i]->Update(deltaTime);
+    }
 }
 
 void Level::Draw(RenderWindow& window) {
     background.Draw(window);
     for (int i = 0; i < Environment.size(); i++) {
         Environment[i]->Draw(window);
+    }
+    for (int i = 0; i < Keys.size(); i++) {
+        Keys[i]->Draw(window);
     }
 }

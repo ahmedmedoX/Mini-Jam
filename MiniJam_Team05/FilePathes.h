@@ -14,6 +14,6 @@ public:
 	static constexpr const char* boxSprite = "assets/objects/box.png";
 	static constexpr const char* spikeSprite = "assets/objects/spike.png";
 	static constexpr const char* keyIdle = "assets/objects/keyIdle.png";
-	static constexpr const char* door = "assets/objects/door.png";
+	//static constexpr const char* door = "assets/objects/door.png";
 };
 
