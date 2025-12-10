@@ -11,3 +11,10 @@ enum ObjectType
 	GROUND = 0x0001,
 };
 
+enum Levels
+{
+	LEVEL_ONE,
+	LEVEL_TWO,
+	LEVEL_THREE
+};
+

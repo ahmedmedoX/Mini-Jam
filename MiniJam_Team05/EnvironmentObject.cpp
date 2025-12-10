@@ -73,6 +73,8 @@ void EnvironmentObject::InitializeAnimations()
 		texture = &SpriteLoader::getTexture(SpriteType::boxSprite);
     else if(filter.categoryBits == SPIKE)
         texture = &SpriteLoader::getTexture(SpriteType::spikeSprite);
+	else if (filter.categoryBits == DOOR)
+		texture = &SpriteLoader::getTexture(SpriteType::doorSprite);
 
     sprite.setTexture(*texture);
     sprite.setScale(size.x / texture->getSize().x,

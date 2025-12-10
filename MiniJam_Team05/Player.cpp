@@ -198,6 +198,12 @@ void Player::BeginContact(b2Contact* contact)
         interacting = true;
     }
 
+    if (cA == KEY || cB == KEY)
+    {
+        collectables++;
+		std::cout << "Player collected a key! Total keys: " << collectables << std::endl;
+    }
+
     if (fA == footSensor || fB == footSensor)
     {
         footContacts++;
