@@ -7,7 +7,6 @@
 class Level {
     Rotator rotator;
     Background background;
-    const b2Vec2 roomCenter = b2Vec2_zero;
     bool rotating;
     float angleStep;
     float targetRotation;

@@ -61,8 +61,8 @@ void Level::Update(const float deltaTime, Clock& RotationClock, b2World& world) 
             RotationClock.restart();
         }
         totalRotation += angleStep;
-        rotator.RotateLevel(Environment, world, roomCenter, angleStep);
-        rotator.RotateKey(Level_Key, world, roomCenter, angleStep);
+        rotator.RotateLevel(Environment, world, b2Vec2_zero, angleStep);
+        rotator.RotateKey(Level_Key, world, b2Vec2_zero, angleStep);
         background.Update(angleStep);
     }
 
