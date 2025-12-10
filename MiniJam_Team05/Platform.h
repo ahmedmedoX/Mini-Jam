@@ -1,24 +1,29 @@
 #pragma once
 #include <Box2D/Box2D.h>
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "Cell.h"
 
-class Platform
+class Platform : public sf::Drawable
 {
 private:
-	b2World& world;
-	float scale;
-	float length;
+
 	b2Vec2 position;
-	b2Vec2 rotation;
+	int length;
+	float scale;
+	sf::Vector2f cellSize;
 	b2Body* body;
-	sf::Texture* texture;
-	sf::Sprite sprite;
+	b2Filter filter;
+	std::vector<Cell> cells;
 public:
 
-	Platform(b2World& world , float scale , float length , b2Vec2 position , b2Vec2 rotation);
-	void SetBody();
+	Platform(b2World& world , float scale , int length ,sf::Vector2f cellSize, b2Vec2 position);
+	void SetBody(b2World& world);
 	void SetFixture();
-	void SetTexture();
+	void SetCells();
+	void Update();
+	void setRotation(float angle);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 	~Platform();
 };
 

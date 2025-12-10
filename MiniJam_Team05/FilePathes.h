@@ -10,6 +10,8 @@ public:
 	static constexpr const char* playerPush = "assets/player/push.png";
 	static constexpr const char* playerFall = "assets/player/fall.png";
 
+	static constexpr const char* caveTile = "assets/environment/caveTile.png";
+
 	static constexpr const char* boxSprite = "assets/objects/box.png";
 	static constexpr const char* spikeSprite = "assets/objects/spike.png";
 	static constexpr const char* keyIdle = "assets/objects/keyIdle.png";

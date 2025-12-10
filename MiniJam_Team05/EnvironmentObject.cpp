@@ -2,15 +2,12 @@
 #include "SpriteLoader.h"
 #include <iostream>
 
-EnvironmentObject::EnvironmentObject(b2World& world, float scale, b2Vec2 position , ObjectType type)
+EnvironmentObject::EnvironmentObject(b2World& world, float scale, b2Vec2 position, sf::Vector2f size , ObjectType type)
 {
     this->world = &world;
-    body = nullptr;
-
+    this->size = size;
     this->scale = scale;
-    startPosition = position;
-
-    size = sf::Vector2f(32.f, 32.f);  
+    startPosition = position; 
     density = 1.0f;
     boxDensity = 1000.f;
     friction = 0.3f;
@@ -63,9 +60,9 @@ void EnvironmentObject::InitializeAnimations()
         texture = &SpriteLoader::getTexture(SpriteType::keyIdle);
         idle = Animation(texture, { 5, 1 }, animationRate);
         sprite.setTexture(*texture);
+        sprite.setOrigin(idle.uvRect.width / 2, idle.uvRect.height / 2);
         sprite.setScale(size.x / idle.uvRect.width,
             size.y / idle.uvRect.height);
-        sprite.setOrigin(idle.uvRect.width / 2, idle.uvRect.height / 2);
         return;
     }
 

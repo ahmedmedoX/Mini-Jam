@@ -25,6 +25,7 @@ sf::Texture& SpriteLoader::getTexture(SpriteType spriteType)
 	case SpriteType::spikeSprite:  path = FilePathes::spikeSprite;  break;
     case SpriteType::keyIdle:  path = FilePathes::keyIdle;  break;
 	case SpriteType::doorSprite:  path = FilePathes::doorSprite;  break;
+	case SpriteType::caveTile:  path = FilePathes::caveTile;  break;
     }
 
     if (!tex.loadFromFile(path))

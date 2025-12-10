@@ -140,18 +140,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Enums.cpp" />
     <ClCompile Include="EnvironmentObject.cpp" />
     <ClCompile Include="FileName.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SpriteLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="EnvironmentObject.h" />
     <ClInclude Include="FilePathes.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SpriteLoader.h" />

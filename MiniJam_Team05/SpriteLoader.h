@@ -17,6 +17,7 @@ enum SpriteType
 	spikeSprite,
 	boxSprite,
 	doorSprite,
+	caveTile,
     Null
 };
 class SpriteLoader {

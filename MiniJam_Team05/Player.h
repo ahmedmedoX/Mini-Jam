@@ -28,11 +28,8 @@ class Player : public sf::Drawable ,  public b2ContactListener
 {
 private:
 	b2Vec2 startPosition;
-	b2World* world;
 	b2Body* boxBody;
-
 	b2Fixture* footSensor;
-
 	b2Filter filter;
 
 	std::map<States, Animation> animations;
@@ -58,10 +55,10 @@ public :
 	b2Body* body;
 	float velocity;
 	Player(b2World& world, float scale, b2Vec2 position);
-	void SetBody();
+	void SetBody(b2World& world);
 	void SetFixture();	
 	void InitializeAnimations();
-	void Update(Direction dir , Control control , float deltaTime);
+	void Update(b2World& world, Direction dir , Control control , float deltaTime);
 	void Move(Direction dir);
 	void UpdateAnimation(float deltaTime ,Direction dir);
 	void BeginContact(b2Contact* contact) override;

@@ -5,7 +5,6 @@
 
 Player::Player(b2World& world, float scale, b2Vec2 position)
 {
-    this->world = &world;
     this->scale = scale;
     this->startPosition = position;
 
@@ -18,7 +17,7 @@ Player::Player(b2World& world, float scale, b2Vec2 position)
     walkVelocity = 10.0f / scale;
 	fallVelocity = 5.0f / scale;
 	velocity = walkVelocity;
-    animationRate = 0.1f;
+    animationRate = 0.2f;
 
     footContacts = 0;
     onGround = false;
@@ -27,19 +26,19 @@ Player::Player(b2World& world, float scale, b2Vec2 position)
     filter.maskBits = GROUND | BOX| KEY
         | SPIKE| DOOR;
 
-    SetBody();
+    SetBody(world);
     SetFixture();
     InitializeAnimations();
 }
 
-void Player::SetBody()
+void Player::SetBody(b2World& world)
 {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(startPosition.x / scale, startPosition.y / scale);
     bodyDef.fixedRotation = true;
 
-    body = world->CreateBody(&bodyDef);
+    body = world.CreateBody(&bodyDef);
 }
 
 void Player::SetFixture()
@@ -82,15 +81,15 @@ void Player::InitializeAnimations()
 
     animations[IDLE] = Animation(textures[IDLE], { 2, 1 }, .8);
     animations[MOVE] = Animation(textures[MOVE], { 5, 1 }, animationRate);
-    animations[PUSH] = Animation(textures[PUSH], { 2, 1 }, animationRate);
-    animations[PULL] = Animation(textures[PULL], { 2, 1 }, animationRate);
+    animations[PUSH] = Animation(textures[PUSH], { 2, 1 }, .1);
+    animations[PULL] = Animation(textures[PULL], { 2, 1 }, .1);
     animations[FALL] = Animation(textures[FALL], { 1, 1 }, animationRate);
 
     sprite.setScale(size.x / animations[IDLE].uvRect.width,
         size.y / animations[IDLE].uvRect.height);
 }
 
-void Player::Update(Direction dir, Control control, float deltaTime)
+void Player::Update(b2World& world,Direction dir, Control control, float deltaTime)
 {
     currentState = IDLE;
 
@@ -101,7 +100,7 @@ void Player::Update(Direction dir, Control control, float deltaTime)
     {
         if (dirX != 0)
         {
-            float gravity = fabs(world->GetGravity().y);
+            float gravity = world.GetGravity().y;
 
             float force = boxBody->GetMass() * gravity * 0.52f;
             float drag = body->GetMass() * gravity * 0.52f;
@@ -243,5 +242,6 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 Player::~Player()
 {
+    
 
 }
