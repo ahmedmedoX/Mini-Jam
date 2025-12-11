@@ -1,24 +1,22 @@
 #pragma once
 
-#include <Box2D/box2d.h>
 #include "Animation.h"
 #include "SpriteLoader.h"
 #include "Enums.h"
 #include "Utilities.h"
 
-enum Direction
-{
+enum Direction {
 	LEFT = -1,
 	RIGHT = 1,
 	NOMOVE = 0
 };
-enum Control
-{
+
+enum Control {
 	INTERACT,
 	NONE
 };
-enum States
-{
+
+enum States {
 	MOVE,
 	PUSH,
 	PULL,
@@ -27,7 +25,6 @@ enum States
 };
 
 class Player : public Drawable, public b2ContactListener {
-private:
 	b2World* world;
 	b2Body* boxBody;
 
@@ -43,13 +40,15 @@ private:
 
 	const Vector2f size = Vector2f(32.f, 48.f);
 	const float walkVelocity = 80.0f / Utilities::PIXELS_PER_UNIT;
-	const float fallVelocity = 5.0f / Utilities::PIXELS_PER_UNIT;
+	const float fallVelocity = 80.0f / Utilities::PIXELS_PER_UNIT;
+	const float animationRate = 0.4f;
+
 	bool interacting;
-	float animationRate;
 	int footContacts = 0;
 	bool onGround = false;
 	bool is_Key_Collected = false;
 	bool is_Door_Opened = false;
+	bool is_Player_Lost = false;
 
 public:
 	b2Body* body;
@@ -64,6 +63,7 @@ public:
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
 	bool isKeyCollected();
+	bool isPlayerLost();
 	bool isDoorOpened();
 	void draw(RenderTarget& target, RenderStates states) const override;
 	~Player();

@@ -1,29 +1,23 @@
 #include "GameManager.h"
 
 GameManager::GameManager()
-    : m_window(VideoMode(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT), "SFML Box2D Physics!")
+    : m_window(VideoMode(Utilities::WINDOW_WIDTH, Utilities::WINDOW_HEIGHT),
+        "Glitch Bound", Style::Close)
 {
-    m_window.setFramerateLimit(Utilities::FPS);
+    Image* icon = new Image();
+    icon->loadFromFile(FilePathes::icon);
 
+    m_window.setFramerateLimit(Utilities::FPS);
+    m_window.setIcon(icon->getSize().x, icon->getSize().y, icon->getPixelsPtr());
+    
     m_world = make_unique<b2World>(b2Vec2(0, -9.8f));
 
-    player = std::make_unique<Player>(
-        *m_world, Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
+    player = std::make_unique<Player>(*m_world,
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
 
-    Texture* bgTexture =new Texture();
-    bgTexture->loadFromFile("Map.jfif");
-
-    m_levelData.push_back({
-        [bgTexture](b2World& world) {
-            return make_unique<Level_Rock>(world, bgTexture);
-        }
-        });
-
-    m_levelData.push_back({
-        [bgTexture](b2World& world) {
-            return make_unique<Level_Forest>(world, bgTexture);
-        }
-        });
+    m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Rock>(world);}});
+    //m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Lava>(world);}});
+    m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Forest>(world);}});
 
     m_deltaTime = 0.f;
 
@@ -44,6 +38,7 @@ void GameManager::Run() {
         Update();
         Draw();
         CheckLevelWin();
+        CheckLevelLose();
         //if (CheckLevelWin()) {
         //    if (m_currentIndex >= m_levelData.size()) {
         //        Win();
@@ -78,7 +73,7 @@ void GameManager::HandleInput() {
             if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) {
                 dir = Direction::NOMOVE;
             }
-            if (event.key.code == sf::Keyboard::F) {
+            if (event.key.code == sf::Keyboard::F || event.key.code == sf::Keyboard::Up) {
                 control = Control::NONE;
             }
         }
@@ -119,7 +114,7 @@ void GameManager::Draw() {
     m_window.display();
 }
 
-void GameManager::SwitchLevel(int index) {
+void GameManager::SwitchLevel(const int index) {
     if (index >= 0 && index < m_levelData.size()) {
         m_currentIndex = index;
         m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
@@ -135,8 +130,8 @@ void GameManager::RestartLevel() {
     m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 
     player.reset();
-    player = std::make_unique<Player>(
-        *m_world, Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
+    player = std::make_unique<Player>(*m_world,
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
 
     m_world->SetContactListener(player.get());
 
@@ -144,20 +139,23 @@ void GameManager::RestartLevel() {
     m_rotationClock.restart();
 }
 
-bool GameManager::CheckLevelWin() {
-    Player* p = player.get();
+void GameManager::CheckLevelLose() {
+    if (player->isPlayerLost())
+        RestartLevel();
+}
 
-    if (!p->isKeyCollected())
+bool GameManager::CheckLevelWin() {
+
+    if (!player->isKeyCollected())
         return false;
 
     m_currentLevel->CollectKey();
 
-    if (p->isDoorOpened()) {
+    if (player->isDoorOpened()) {
         int next = (m_currentIndex + 1) % m_levelData.size();
         SwitchLevel(next);
         RestartLevel();
     }
-
     return false;
 }
 

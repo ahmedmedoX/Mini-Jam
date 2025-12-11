@@ -6,10 +6,9 @@
 class Door : public BoxCollider {
 	Texture* texture = new Texture();
 	Sprite sprite;
-	const float animationRate = 0.3f;
 public:
-	Door(b2World& world, b2Vec2 position);
-	void Update(float deltaTime);
+	Door(b2World& world, const b2Vec2 position);
+	void Update();
 	void Draw(RenderWindow& window);
 	~Door() noexcept = default;
 };

@@ -5,8 +5,11 @@
 
 class Key : public BoxCollider {
 	Texture* texture = new Texture();
+	Texture* Sparkle_texture = new Texture();
 	Sprite sprite;
+	Sprite Sparkle;
 	Animation idle;
+	Animation Sparkle_Anim;
 	const float animationRate = 0.3f;
 public:
 	Key(b2World& world, b2Vec2 position);

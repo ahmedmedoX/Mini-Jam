@@ -3,27 +3,25 @@
 #include "Background.h"
 #include "Key.h"
 #include "Door.h"
+#include "Spike.h"
 
 class Level {
-    Rotator rotator;
-    Background background;
+    Rotator Level_Rotator;
+    Background Level_Background;
+
     bool rotating;
     float angleStep;
     float targetRotation;
     float totalRotation;
-
-protected:
-    vector<unique_ptr<GameObject>> Environment;
-    unique_ptr<Key> Level_Key;
-    unique_ptr<Door> Level_Door;
-
     const float rotationSpeed = 0.8f;
     const float rotationDelay = 3.0f;
     const float rotationAngle = Utilities::Degree_to_Radian(90.0f);
 
-    Texture* Key_Texture;
-    Texture* Box_Texture;
-    Texture* Door_Texture;
+protected:
+    vector<unique_ptr<GameObject>> Environment;
+    vector<unique_ptr<Spike>> Spikes;
+    unique_ptr<Key> Level_Key;
+    unique_ptr<Door> Level_Door;
 
 public:
     Level(b2World& world, Texture* Background_Texture);

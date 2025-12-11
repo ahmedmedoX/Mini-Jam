@@ -1,7 +1,7 @@
 #include "Level_Forest.h"
 
-Level_Forest::Level_Forest(b2World& world, Texture* Background_Texture) :
-    Level(world, Background_Texture)
+Level_Forest::Level_Forest(b2World& world) :
+    Level(world, &SpriteLoader::getTexture(SpriteType::Level2))
 {
     Environment.push_back(make_unique<GameObject>(
         Utilities::Convert_SFML_Box2D_Space(Vector2f(500, 64 * 2.5f)),
@@ -16,4 +16,3 @@ Level_Forest::Level_Forest(b2World& world, Texture* Background_Texture) :
 }
 
 Level_Forest::~Level_Forest() {}
-

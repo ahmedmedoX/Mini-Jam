@@ -20,14 +20,19 @@ sf::Texture& SpriteLoader::getTexture(SpriteType spriteType) {
     case SpriteType::playerFall: path = FilePathes::playerFall; break;
     case SpriteType::playerSprite: path = FilePathes::player; break;
 
-    case SpriteType::boxSprite:  path = FilePathes::boxSprite;  break;
-    case SpriteType::spikeSprite:  path = FilePathes::spikeSprite;  break;
+    case SpriteType::box1Sprite:  path = FilePathes::box1Sprite;  break;
+    case SpriteType::box2Sprite:  path = FilePathes::box2Sprite;  break;
+    case SpriteType::box3Sprite:  path = FilePathes::box3Sprite;  break;
+    case SpriteType::spike1Sprite:  path = FilePathes::spike1Sprite;  break;
+    case SpriteType::spike2Sprite:  path = FilePathes::spike2Sprite;  break;
+    case SpriteType::spike3Sprite:  path = FilePathes::spike3Sprite;  break;
     case SpriteType::keyIdle:  path = FilePathes::keyIdle;  break;
+    case SpriteType::sparkleSprite:  path = FilePathes::sparkleSprite;  break;
     case SpriteType::doorSprite:  path = FilePathes::doorSprite;  break;
 
     case SpriteType::Level1:  path = FilePathes::Level1_Background;  break;
     case SpriteType::Level2:  path = FilePathes::Level2_Background;  break;
-    //case SpriteType::Level3:  path = FilePathes::Level3_Background;  break;
+    case SpriteType::Level3:  path = FilePathes::Level3_Background;  break;
     }
 
     if (!tex.loadFromFile(path))

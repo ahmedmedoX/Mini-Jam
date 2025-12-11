@@ -7,7 +7,6 @@ Player::Player(b2World& world, const b2Vec2 position) {
     boxBody = nullptr;
 
     velocity = walkVelocity;
-    animationRate = 0.5f;
 
     footContacts = 0;
     onGround = false;
@@ -70,7 +69,7 @@ void Player::InitializeAnimations() {
     textures[PULL] = &SpriteLoader::getTexture(playerPull);
     textures[FALL] = &SpriteLoader::getTexture(playerFall);
 
-    animations[IDLE] = Animation(textures[IDLE], { 4, 1 }, .8);
+    animations[IDLE] = Animation(textures[IDLE], { 2, 1 }, .8);
     animations[MOVE] = Animation(textures[MOVE], { 5, 1 }, animationRate);
     animations[PUSH] = Animation(textures[PUSH], { 2, 1 }, animationRate);
     animations[PULL] = Animation(textures[PULL], { 2, 1 }, animationRate);
@@ -113,16 +112,19 @@ void Player::Update(Direction dir, Control control, float deltaTime) {
 
         if (horizontalMove) {
             Move(dir);
-            currentState = MOVE;
+            if(onGround)
+                currentState = MOVE;
+            else
+                currentState = FALL;
         }
     }
     UpdateAnimation(deltaTime, dir);
 }
 
 void Player::Move(Direction dir) {
-    b2Vec2 vel = body->GetLinearVelocity();
-    vel.x = velocity * (dir == LEFT ? -1 : 1);
-    body->SetLinearVelocity(vel);
+    body->SetLinearVelocity(b2Vec2(
+        velocity * (dir == LEFT ? -1 : 1),
+        body->GetLinearVelocity().y));
 }
 
 void Player::UpdateAnimation(const float dt, Direction dir) {
@@ -152,6 +154,7 @@ void Player::BeginContact(b2Contact* contact) {
 
     if (cA == SPIKE || cB == SPIKE) {
         std::cout << "Player hit spikes!" << std::endl;
+        is_Player_Lost = true;
         return;
     }
 
@@ -203,8 +206,11 @@ void Player::EndContact(b2Contact* contact) {
 }
 
 bool Player::isKeyCollected() {
-
     return is_Key_Collected;
+}
+
+bool Player::isPlayerLost() {
+    return is_Player_Lost;
 }
 
 bool Player::isDoorOpened() {

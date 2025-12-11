@@ -3,15 +3,10 @@
 #include "Level_Forest.h"
 #include "LevelData.h"
 #include "Player.h"
+#include "FilePathes.h"
 #include <list>
 
 class GameManager {
-public:
-    GameManager();
-    ~GameManager();
-    void Run();
-
-private:
     RenderWindow m_window;
     Clock m_deltaClock;
     Clock m_rotationClock;
@@ -34,9 +29,15 @@ private:
     void HandleInput();
     void Update();
     void Draw();
-    void SwitchLevel(int index);
+    void SwitchLevel(const int index);
     void RestartLevel();
     bool CheckLevelWin();
+    void CheckLevelLose();
     void Win();
     void Death();
+
+public:
+    GameManager();
+    ~GameManager();
+    void Run();
 };

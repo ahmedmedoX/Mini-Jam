@@ -2,7 +2,7 @@
 #include "FilePathes.h"
 
 Level::Level(b2World &world, Texture* Background_Texture) :
-    background(Background_Texture)
+    Level_Background(Background_Texture)
 {
     Environment.push_back(std::make_unique<GameObject>(
         Utilities::Convert_SFML_Box2D_Space(Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT - 80)),
@@ -28,15 +28,6 @@ Level::Level(b2World &world, Texture* Background_Texture) :
     targetRotation = 0.0f;
     totalRotation = 0.0f;
     angleStep = 0.0f;
-
-    Key_Texture = new Texture();
-    Key_Texture->loadFromFile(FilePathes::keyIdle);
-
-    Box_Texture = new Texture();
-    Box_Texture->loadFromFile(FilePathes::boxSprite);
-
-    Door_Texture = new Texture();
-    Door_Texture->loadFromFile(FilePathes::doorSprite);
 }
 
 Level::~Level() {
@@ -61,9 +52,11 @@ void Level::Update(const float deltaTime, Clock& RotationClock, b2World& world) 
             RotationClock.restart();
         }
         totalRotation += angleStep;
-        rotator.RotateLevel(Environment, world, b2Vec2_zero, angleStep);
-        rotator.RotateKey(Level_Key, world, b2Vec2_zero, angleStep);
-        background.Update(angleStep);
+        Level_Rotator.RotateLevel(Environment, angleStep);
+        Level_Rotator.RotateSpike(Spikes, angleStep);
+        Level_Rotator.RotateKey(Level_Key, angleStep);
+        Level_Rotator.RotateDoor(Level_Door, angleStep);
+        Level_Background.Update(angleStep);
     }
 
     for (int i = 0; i < Environment.size(); i++) {
@@ -74,19 +67,29 @@ void Level::Update(const float deltaTime, Clock& RotationClock, b2World& world) 
         Level_Key->Update(deltaTime);
 
     if (Level_Door)
-        Level_Door->Update(deltaTime);
+        Level_Door->Update();
+
+    for (int i = 0; i < Spikes.size(); i++) {
+        Spikes[i]->Update();
+    }
 }
 
 void Level::Draw(RenderWindow& window) {
-    background.Draw(window);
+    Level_Background.Draw(window);
+
     for (int i = 0; i < Environment.size(); i++) {
         Environment[i]->Draw(window);
     }
+
     if(Level_Key)
         Level_Key->Draw(window);
 
     if(Level_Door)
         Level_Door->Draw(window);
+
+    for (int i = 0; i < Spikes.size(); i++) {
+        Spikes[i]->Draw(window);
+    }
 }
 
 void Level::CollectKey() {

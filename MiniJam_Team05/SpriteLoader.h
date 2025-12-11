@@ -12,12 +12,17 @@ enum SpriteType {
 	playerPull,
 	playerFall,
 	keyIdle,
-	spikeSprite,
-	boxSprite,
+	sparkleSprite,
+	spike1Sprite,
+	spike2Sprite,
+	spike3Sprite,
 	doorSprite,
+	box1Sprite,
+	box2Sprite,
+	box3Sprite,
 	Level1,
 	Level2,
-	//Level3,
+	Level3,
     Null
 };
 

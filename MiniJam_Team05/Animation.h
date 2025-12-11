@@ -10,7 +10,8 @@ class Animation {
 public:
 	IntRect uvRect;
 	Animation();
-	Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
+	Animation(sf::Texture* texture, const sf::Vector2u imageCount, const float switchTime);
 	~Animation();
-	void Update(int row, float deltaTime);
+	void Update(const int row, const float deltaTime);
+	void Update(const float deltaTime);
 };

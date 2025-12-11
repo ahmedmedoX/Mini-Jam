@@ -153,6 +153,7 @@
     <ClCompile Include="Level_Rock.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rotator.cpp" />
+    <ClCompile Include="Spike.cpp" />
     <ClCompile Include="SpriteLoader.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <ClInclude Include="Level_Rock.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rotator.h" />
+    <ClInclude Include="Spike.h" />
     <ClInclude Include="SpriteLoader.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
