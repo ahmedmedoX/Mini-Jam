@@ -16,22 +16,21 @@ GameObject::GameObject(const b2Vec2 Position, b2World& world, const float width,
     const float height, ObjectType type, int Level_Index)
     : Collision_Box(width, height, 2.0f, world, Position, true, type)
 {
-    switch (Level_Index)
-    {
-    case(1): {
-        Shape.setTexture(&SpriteLoader::getTexture(SpriteType::box1Sprite));
-        break;
-    }
-    case(2): {
-        Shape.setTexture(&SpriteLoader::getTexture(SpriteType::box2Sprite));
-        break;
-    }
-    case(3): {
-        Shape.setTexture(&SpriteLoader::getTexture(SpriteType::box3Sprite));
-        break;
-    }
-    default:
-        break;
+    switch (Level_Index) {
+        case(1): {
+            Shape.setTexture(&SpriteLoader::getTexture(SpriteType::box1Sprite));
+            break;
+        }
+        case(2): {
+            Shape.setTexture(&SpriteLoader::getTexture(SpriteType::box2Sprite));
+            break;
+        }
+        case(3): {
+            Shape.setTexture(&SpriteLoader::getTexture(SpriteType::box3Sprite));
+            break;
+        }
+        default:
+            break;
     }
 
     Shape.setSize(Vector2f(width * Utilities::PIXELS_PER_UNIT, height * Utilities::PIXELS_PER_UNIT));

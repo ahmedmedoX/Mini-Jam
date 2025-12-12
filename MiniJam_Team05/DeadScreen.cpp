@@ -1,7 +1,6 @@
 ﻿#include "DeadScreen.h"
 
-DeadScreen::DeadScreen(sf::Window& window)
-{
+DeadScreen::DeadScreen(sf::Window& window) {
     RetryTexture.loadFromFile("assets/ui/RestartBotton.png");
     MenuTexture.loadFromFile("assets/ui/MenuButton.png");
 
@@ -20,20 +19,14 @@ DeadScreen::DeadScreen(sf::Window& window)
     MenuBtn.SetOnClick(std::bind(&DeadScreen::MenuBtnClicked, this));
 }
 
-
-
-
-void DeadScreen::Update(sf::RenderWindow& window)
-{
+void DeadScreen::Update(sf::RenderWindow& window) {
 	sf::Vector2f mouse = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-
 
 	MenuBtn.Update(mouse);
 	MenuBtn.OnClick(mouse	);
 
 	RetryBtn.Update(mouse);
 	RetryBtn.OnClick(mouse);
-
 }
 
 void DeadScreen::Draw(sf::RenderWindow& window) {
@@ -46,11 +39,9 @@ void DeadScreen::Draw(sf::RenderWindow& window) {
 	MenuBtn.Draw(window);
 }
 
-void DeadScreen:: MenuBtnClicked()
-{
+void DeadScreen:: MenuBtnClicked() {
 	std::cout << "menue!\n";
 }
-void DeadScreen::RestartBtnClicked()
-{
+void DeadScreen::RestartBtnClicked() {
 	std::cout << "restated!\n";
 }
