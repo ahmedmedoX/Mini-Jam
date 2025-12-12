@@ -14,12 +14,15 @@ BoxCollider::BoxCollider(const float width,
     shape.SetAsBox((width / 2), (height / 2));
     fixtureDef.shape = &shape;
 
-    fixtureDef.friction = dynamic ? 0.3f : friction;
-    fixtureDef.density = dynamic ? 10.0f : 0.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.density = dynamic ? 100.0f : 0.0f;
     fixtureDef.filter.categoryBits = type;
-    fixtureDef.filter.maskBits = 0xFFFF;
-
-    //body->SetBullet(true);
+    if (type == BOX) {
+        fixtureDef.filter.maskBits = PLAYER | GROUND | SPIKE | BOX;
+    }
+    else {
+        fixtureDef.filter.maskBits = 0xFFFF;
+    }
     body->SetAngularDamping(0.1);
     body->SetSleepingAllowed(false);
     body->CreateFixture(&fixtureDef);

@@ -83,7 +83,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;box2d.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;box2dd.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,7 +117,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-audio-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;box2d.lib</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;box2dd.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,7 +144,7 @@
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="DeadScreen.cpp" />
     <ClCompile Include="Door.cpp" />
-    <ClCompile Include="Enums.cpp" />
+    <ClCompile Include="FinalMenu.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -171,6 +171,7 @@
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="FilePathes.h" />
+    <ClInclude Include="FinalMenu.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Key.h" />
@@ -181,6 +182,8 @@
     <ClInclude Include="Level_Rock.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="Rotator.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spike.h" />
@@ -188,6 +191,15 @@
     <ClInclude Include="UIBtn.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="WinScreen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MiniJam_Team05.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\Untitled-1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

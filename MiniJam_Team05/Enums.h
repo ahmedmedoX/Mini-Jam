@@ -13,5 +13,9 @@ enum GameState {
     MENU,
     PLAY,
     DEATH,
-    WIN
+    NEXT,
+    WIN,
+    RESTART,
+    FINAL,
+    QUIT
 };

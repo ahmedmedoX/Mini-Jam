@@ -8,6 +8,7 @@ class Key : public BoxCollider {
 	Texture* Sparkle_texture = new Texture();
 	Sprite sprite;
 	Sprite Sparkle;
+	RectangleShape collision;
 	Animation idle;
 	Animation Sparkle_Anim;
 	const float animationRate = 0.3f;

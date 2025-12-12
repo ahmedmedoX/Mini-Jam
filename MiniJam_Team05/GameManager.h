@@ -3,16 +3,12 @@
 #include "Level_Forest.h"
 #include "Level_Lava.h"
 #include "LevelData.h"
-
-#include "Player.h"
-
 #include "FilePathes.h"
-
+#include "Player.h"
 #include "MainMenu.h"
 #include "DeadScreen.h"
 #include "WinScreen.h"
-
-#include <list>
+#include "FinalMenu.h"
 
 class GameManager {
     RenderWindow m_window;
@@ -30,15 +26,17 @@ class GameManager {
     int m_currentIndex = 0;
     vector<LevelData> m_levelData;
     unique_ptr<Level> m_currentLevel;
-    //Level_Rock* lvl;
 
     unique_ptr<Player> player;
     Direction dir;
     Control control;
 
-    MainMenu* mainMenu;
-    DeadScreen* deadScreen;
-    //WinScreen* winScreen;
+    MainMenu* MenuUI;
+    DeadScreen* DeathUI;
+    WinScreen* WinUI;
+    FinalMenu* FinalUI;
+
+    bool restart = true;
 
     void HandleInput();
     void Update();
@@ -47,8 +45,6 @@ class GameManager {
     void RestartLevel();
     void CheckLevelWin();
     void CheckLevelLose();
-    void Win();
-    void Death();
 
 public:
     GameManager();

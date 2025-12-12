@@ -39,6 +39,18 @@ void SoundManager::Play(const std::string& name)
     }
 }
 
+void SoundManager::Stop(const std::string& name)
+{
+    if (sounds.find(name) != sounds.end())
+    {
+        sounds[name].stop();
+    }
+    else
+    {
+        std::cout << "Sound not found: " << name << "\n";
+    }
+}
+
 void SoundManager::SetVolume(float vol)
 {
     volume = vol;
@@ -46,5 +58,36 @@ void SoundManager::SetVolume(float vol)
     for (auto& s : sounds)
     {
         s.second.setVolume(vol);
+    }
+}
+
+void SoundManager::SetVolume(const std::string& name, float vol)
+{
+    if (sounds.find(name) != sounds.end())
+    {
+        sounds[name].setVolume(vol);
+    }
+    else
+    {
+        std::cout << "Sound not found: " << name << "\n";
+    }
+}
+
+void SoundManager::SetLoop(const std::string& name, const bool loop) {
+    if (sounds.find(name) != sounds.end())
+    {
+        sounds[name].setLoop(loop);
+    }
+    else
+    {
+        std::cout << "Sound not found: " << name << "\n";
+    }
+}
+
+void SoundManager::StopAll()
+{
+    for (auto& s : sounds)
+    {
+        s.second.stop();
     }
 }

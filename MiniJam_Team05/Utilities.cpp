@@ -23,3 +23,30 @@ float Utilities::Degree_to_Radian(float angle) {
 float Utilities::Radian_to_Degree(float angle) {
     return angle * 180.0f / (float)PI;
 }
+
+Color Utilities::HSV_to_RGB(const float H) {
+    float HuePrimeColor = fmod(H / 60.0, 6);
+    float fX = 1.0f - fabs(fmod(HuePrimeColor, 2.0f) - 1.0f);
+
+    if (0 <= HuePrimeColor && HuePrimeColor < 1) {
+        return Color(255, fX * 255, 0);
+    }
+    else if (1 <= HuePrimeColor && HuePrimeColor < 2) {
+        return Color(fX * 255, 255, 0);
+    }
+    else if (2 <= HuePrimeColor && HuePrimeColor < 3) {
+        return Color(0, 255, fX * 255);
+    }
+    else if (3 <= HuePrimeColor && HuePrimeColor < 4) {
+        return Color(0, fX * 255, 255);
+    }
+    else if (4 <= HuePrimeColor && HuePrimeColor < 5) {
+        return Color(fX * 255, 0, 255);
+    }
+    else if (5 <= HuePrimeColor && HuePrimeColor < 6) {
+        return Color(255, 0, fX * 255);
+    }
+    else {
+        return Color(0, 0, 0);
+    }
+}

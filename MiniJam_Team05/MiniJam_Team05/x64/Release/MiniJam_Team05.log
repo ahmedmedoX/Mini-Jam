@@ -1,1 +1,84 @@
-﻿LINK : fatal error LNK1181: cannot open input file 'box2D.lib'
+﻿  Animation.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:         with
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:         [
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:             T=int
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:         ]
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:         with
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:         [
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:             T=int
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:         ]
+  Background.cpp
+  BoxCollider.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\BoxCollider.cpp(26,29): warning C4305: 'argument': truncation from 'double' to 'float'
+  DeadScreen.cpp
+  Door.cpp
+  FinalMenu.cpp
+  Game.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Game.cpp(4,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  GameManager.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\GameManager.cpp(241,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  GameObject.cpp
+  Key.cpp
+  Level.cpp
+  Level_Forest.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244: 'argument': conversion from '_Ty' to 'const float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:             _Ty=unsigned int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         ]
+  (compiling source file 'Level_Forest.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56):
+      the template instantiation context (the oldest one first) is
+          D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level_Forest.cpp(8,27):
+          see reference to function template instantiation 'std::unique_ptr<GameObject,std::default_delete<GameObject>> std::make_unique<GameObject,b2Vec2,b2World&,unsigned int,unsigned int,float,bool,ObjectType,0>(b2Vec2 &&,b2World &,unsigned int &&,unsigned int &&,float &&,bool &&,ObjectType &&)' being compiled
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244: 'argument': conversion from '_Ty' to 'const float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         ]
+  (compiling source file 'Level_Forest.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56):
+      the template instantiation context (the oldest one first) is
+          D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level_Forest.cpp(93,22):
+          see reference to function template instantiation 'std::unique_ptr<Spike,std::default_delete<Spike>> std::make_unique<Spike,b2World&,b2Vec2,int,int,0>(b2World &,b2Vec2 &&,int &&,int &&)' being compiled
+  
+  Level_Lava.cpp
+  Level_Rock.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244: 'argument': conversion from '_Ty' to 'const float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:             _Ty=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56): warning C4244:         ]
+  (compiling source file 'Level_Rock.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56):
+      the template instantiation context (the oldest one first) is
+          D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level_Rock.cpp(99,22):
+          see reference to function template instantiation 'std::unique_ptr<Spike,std::default_delete<Spike>> std::make_unique<Spike,b2World&,b2Vec2,int,int,0>(b2World &,b2Vec2 &&,int &&,int &&)' being compiled
+  
+  MainMenu.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\MainMenu.cpp(34,54): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+  Player.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Player.cpp(72,60): warning C4305: 'argument': truncation from 'double' to 'const float'
+  Rotator.cpp
+  SoundManager.cpp
+  Spike.cpp
+  SpriteLoader.cpp
+  Compiling...
+  UIBtn.cpp
+  Utilities.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Utilities.cpp(28,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Utilities.cpp(32,30): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Utilities.cpp(35,25): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Utilities.cpp(38,33): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Utilities.cpp(41,28): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Utilities.cpp(44,25): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Utilities.cpp(47,33): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
+  WinScreen.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1441 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  MiniJam_Team05.vcxproj -> D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\x64\Release\MiniJam_Team05.exe

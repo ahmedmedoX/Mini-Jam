@@ -9,13 +9,19 @@ class Level {
     Rotator Level_Rotator;
     Background Level_Background;
 
+    bool play = false;
     bool rotating;
+    bool Play_Music = true;
+
     float angleStep;
     float targetRotation;
     float totalRotation;
-    const float rotationSpeed = 0.8f;
-    const float rotationDelay = 5.0f;
-    const float rotationAngle = Utilities::Degree_to_Radian(90.0f);
+
+    float rotationSpeed;
+    float rotationDelay;
+    float rotationAngle;
+    CircleShape timer;
+    CircleShape timer_Background;
 
 protected:
     vector<unique_ptr<GameObject>> Environment;

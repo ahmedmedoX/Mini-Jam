@@ -5,6 +5,8 @@ class GameObject {
 protected:
 	BoxCollider Collision_Box;
 	RectangleShape Shape;
+	RectangleShape collision;
+
 public:
 	GameObject(const b2Vec2 Position, b2World& world, const float width,
 		const float height, const float friction, const bool isDynamic,

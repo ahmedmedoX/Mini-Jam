@@ -17,12 +17,16 @@ Key::Key(b2World& world, const b2Vec2 position)
     Sparkle.setTexture(*Sparkle_texture);
     Sparkle.setScale(40.0f / Sparkle_Anim.uvRect.width, 40.0f / Sparkle_Anim.uvRect.height);
     Sparkle.setOrigin(Sparkle_Anim.uvRect.width / 2.0f, Sparkle_Anim.uvRect.height / 2.0f);
+    collision.setSize(Vector2f(32, 32));
+    collision.setOrigin(Vector2f(16, 16));
+    collision.setFillColor(Color(0, 0, 255, 120));
 }
 
 void Key::Update(const float deltaTime) {
     UpdateAnimation(deltaTime);
     sprite.setPosition(Utilities::Convert_Box2D_SFML_Space(GetPosition()));
     Sparkle.setPosition(sprite.getPosition());
+    collision.setPosition(sprite.getPosition());
 }
 
 void Key::UpdateAnimation(const float deltaTime) {
@@ -40,4 +44,6 @@ void Key::UpdateAnimation(const float deltaTime) {
 void Key::Draw(RenderWindow& window) {
     window.draw(Sparkle);
     window.draw(sprite);
+    if (Utilities::DEBUG)
+        window.draw(collision);
 }

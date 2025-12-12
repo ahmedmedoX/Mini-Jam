@@ -3,6 +3,7 @@
 #include "UIBtn.h"
 #include "SpriteLoader.h"
 #include "FilePathes.h"
+#include "Enums.h"
 
 class MainMenu {
     RectangleShape Background;
@@ -10,18 +11,17 @@ class MainMenu {
     UIBtn StartBtn;
     UIBtn QuitBtn;
 
-    RenderWindow* window;
-
-    bool GameStarted = false;
+    float TotalTime = 0;
+    GameState state;
 
     void StartBtnClicked();
     void QuitBtnClicked();
-
 public:
-    MainMenu(RenderWindow& m_window);
+    MainMenu();
     ~MainMenu();
 
-    bool StartGame();
-    void Update(RenderWindow& window);
+    GameState GetState();
+    void Reset();
+    void Update(RenderWindow& window, const float deltaTime);
     void Draw(RenderWindow& window);
 };

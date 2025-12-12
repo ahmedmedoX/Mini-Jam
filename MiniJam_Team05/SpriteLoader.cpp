@@ -45,11 +45,11 @@ sf::Texture& SpriteLoader::getTexture(SpriteType spriteType) {
     case SpriteType::Quit:  path = FilePathes::Quit_Button;  break;
     case SpriteType::Next:  path = FilePathes::Next_Button;  break;
     case SpriteType::Restart:  path = FilePathes::Restart_Button;  break;
+    case SpriteType::Win_Text:  path = FilePathes::Win_Text;  break;
     }
-
-    if (!tex.loadFromFile(path))
-        std::cerr << "Failed to load texture: " << path << "\n";
-
+    if (!tex.loadFromFile(path)) {
+        //std::cerr << "Failed to load texture: " << path << "\n";
+    }
     return tex;
 }
 

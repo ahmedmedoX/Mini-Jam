@@ -13,13 +13,13 @@ GameManager::GameManager()
     m_world = make_unique<b2World>(b2Vec2(0, -10.0f));
 
     player = std::make_unique<Player>(*m_world,
-        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(369, 100)));
 
     m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Rock>(world);}});
     m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Lava>(world);}});
     m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Forest>(world);}});
 
-    m_deltaTime = 0.f;
+    m_deltaTime = 0.0f;
 
     dir = Direction::NOMOVE;
     control = Control::NONE;
@@ -29,9 +29,12 @@ GameManager::GameManager()
     m_currentIndex = 0;
     m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 
-    mainMenu = new MainMenu(m_window);
+    MenuUI = new MainMenu();
+    DeathUI = new DeadScreen();
+    WinUI = new WinScreen();
+    FinalUI = new FinalMenu();
+
     state = MENU;
-    //deadScreen = new DeadScreen();
 }
 
 void GameManager::Run() {
@@ -55,8 +58,10 @@ void GameManager::Run() {
 void GameManager::HandleInput() {
     Event event;
     while (m_window.pollEvent(event)) {
-        if (event.type == Event::Closed)
+        if (event.type == Event::Closed) {
+            SoundManager::Instance().StopAll();
             m_window.close();
+        }
         if (event.type == sf::Event::KeyPressed) {
             if (event.key.code == sf::Keyboard::F) {
                 control = Control::INTERACT;
@@ -77,10 +82,9 @@ void GameManager::HandleInput() {
             }
         }
     }
-
-    if (Keyboard::isKeyPressed(Keyboard::R)) {
-        RestartLevel();
-    }
+    //if (Keyboard::isKeyPressed(Keyboard::R)) {
+    //    RestartLevel();
+    //}
     //if (Keyboard::isKeyPressed(Keyboard::N)) {
     //    int next = (m_currentIndex + 1) % m_levelData.size();
     //    SwitchLevel(next);
@@ -90,9 +94,10 @@ void GameManager::HandleInput() {
 void GameManager::Update() {
     switch (state) {
         case (MENU): {
-            if (mainMenu->StartGame())
-                state = PLAY;
-            mainMenu->Update(m_window);
+            MenuUI->Update(m_window, m_deltaTime);
+            state = MenuUI->GetState();
+            m_deltaTime = m_deltaClock.restart().asSeconds();
+            m_rotationClock.restart();
             break;
         }
         case (PLAY): {
@@ -107,12 +112,70 @@ void GameManager::Update() {
             break;
         }
         case (DEATH): {
-            deadScreen->Update(m_window);
-            Death();
+            SoundManager::Instance().Stop("Level_Music");
+            DeathUI->Update(m_window);
+            DeathUI->Play();
+            state = DeathUI->GetState();
+            if (restart && (state == MENU)) {
+                RestartLevel();
+                MenuUI->Reset();
+                DeathUI->Reset();
+                restart = false;
+            }
+            if (restart && (state == RESTART)) {
+                RestartLevel();
+                DeathUI->Reset();
+                restart = false;
+            }
+            break;
+        }
+        case (NEXT): {
+            state = PLAY;
+            restart = true;
             break;
         }
         case (WIN): {
-            Win();
+            WinUI->Update(m_window);
+            WinUI->Play();
+            state = WinUI->GetState();
+            if (restart && (state == RESTART)) {
+                RestartLevel();
+                WinUI->Reset();
+                restart = false;
+            }
+            if (restart && (state == NEXT)) {
+                SwitchLevel(m_currentIndex + 1);
+                RestartLevel();
+                WinUI->Reset();
+                restart = false;
+            }
+            break;
+        }
+        case (RESTART): {
+            state = PLAY;
+            restart = true;
+            break;
+        }
+        case (FINAL): {
+            SoundManager::Instance().Stop("Level_Music");
+            FinalUI->Update(m_window, m_deltaTime);
+            state = FinalUI->GetState();
+            if (restart && (state == MENU)) {
+                RestartLevel();
+                FinalUI->Reset();
+                MenuUI->Reset();
+                restart = false;
+            }
+            if (restart && (state == QUIT)) {
+                RestartLevel();
+                FinalUI->Reset();
+                restart = false;
+            }
+            break;
+        }
+        case (QUIT): {
+            SoundManager::Instance().StopAll();
+            m_window.close();
             break;
         }
         default:
@@ -121,10 +184,10 @@ void GameManager::Update() {
 }
 
 void GameManager::Draw() {
-    m_window.clear();
+    m_window.clear(Color::Black);
     switch (state) {
         case (MENU): {
-            mainMenu->Draw(m_window);
+            MenuUI->Draw(m_window);
             break;
         }
         case (PLAY): {
@@ -134,12 +197,27 @@ void GameManager::Draw() {
             break;
         }
         case (DEATH): {
-            deadScreen->Draw(m_window);
-            Death();
+            if (m_currentLevel)
+                m_currentLevel->Draw(m_window);
+            m_window.draw(*player.get());
+            DeathUI->Death(m_window, m_deltaTime, player->GetPosition());
             break;
         }
         case (WIN): {
-            Win();
+            if (m_currentLevel)
+                m_currentLevel->Draw(m_window);
+            m_window.draw(*player.get());
+            WinUI->Draw(m_window);
+            break;
+        }
+        case (FINAL): {
+            if (m_currentLevel)
+                m_currentLevel->Draw(m_window);
+            m_window.draw(*player.get());
+            FinalUI->Draw(m_window);
+            break;
+        }
+        case (QUIT): {
             break;
         }
         default:
@@ -151,7 +229,8 @@ void GameManager::Draw() {
 void GameManager::SwitchLevel(const int index) {
     if (index >= 0 && index < m_levelData.size()) {
         m_currentIndex = index;
-        m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
+        cout << m_currentIndex;
+        //m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
         m_deltaClock.restart();
         m_rotationClock.restart();
     }
@@ -159,13 +238,31 @@ void GameManager::SwitchLevel(const int index) {
 
 void GameManager::RestartLevel() {
     //m_world = std::make_unique<b2World>(b2Vec2(0.f, -9.8f));
+    srand(time(0));
+
     m_world->SetContactListener(nullptr);
 
     m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
 
     player.reset();
-    player = std::make_unique<Player>(*m_world,
-        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
+    switch (m_currentIndex)
+    {
+    case(0): {
+        player = std::make_unique<Player>(*m_world,
+            Utilities::Convert_SFML_Box2D_Space(Vector2f(369, 100)));
+        break;
+    }
+    case(1): {
+        player = std::make_unique<Player>(*m_world,
+            Utilities::Convert_SFML_Box2D_Space(Vector2f(364, 100)));
+        break;
+    }
+    case(2): {
+        player = std::make_unique<Player>(*m_world,
+            Utilities::Convert_SFML_Box2D_Space(Vector2f(270, 100)));
+        break;
+    }
+    }
 
     m_world->SetContactListener(player.get());
 
@@ -174,39 +271,22 @@ void GameManager::RestartLevel() {
 }
 
 void GameManager::CheckLevelLose() {
-    if (player->isPlayerLost())
+    if (player->isPlayerLost()) {
         state = DEATH;
+        restart = true;
+    }
 }
 
 void GameManager::CheckLevelWin() {
     if (player->isKeyCollected()) {
         m_currentLevel->CollectKey();
         if (player->isDoorOpened()) {
-            int next = (m_currentIndex + 1) % m_levelData.size();
-            SwitchLevel(next);
-            RestartLevel();
+            if (m_currentIndex == m_levelData.size()-1)
+                state = FINAL;
+            else
+                state = WIN;
         }
     }
-}
-
-void GameManager::Win() {
-    // TODO: Replace with actual level win logic
-    // Example: if player box reaches some position
-    cout << "WIN\n";
-}
-
-void GameManager::Death() {
-    //if (TotalTime < 5.0f) {
-    //    if ((TotalTime /= 5.0f / 2) < 1) {
-    //        Scale = ((5.0f / 2) * (TotalTime * TotalTime));
-    //    }
-    //    else {
-    //        Scale = -5.0f / 2 * (((TotalTime - 2) * (--TotalTime)) - 1);
-    //    }
-    //    Win_Screen.setScale(Vector2f(Scale, Scale));
-    //}
-    RestartLevel();
-    state = PLAY;
 }
 
 GameManager::~GameManager() {}

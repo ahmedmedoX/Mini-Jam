@@ -37,4 +37,5 @@ public:
 	static constexpr const char* Quit_Button = "assets/ui/QuitButton.png";
 	static constexpr const char* Next_Button = "assets/ui/NextButton.png";
 	static constexpr const char* Restart_Button = "assets/ui/RestartButton.png";
+	static constexpr const char* Win_Text = "assets/ui/YouWinText.png";
 };

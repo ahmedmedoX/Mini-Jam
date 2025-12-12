@@ -10,7 +10,11 @@ public:
 
     bool LoadSound(const std::string& name, const std::string& filepath);
     void Play(const std::string& name);
+    void Stop(const std::string& name);
     void SetVolume(float volume);
+    void SetVolume(const std::string& name, float vol);
+    void SetLoop(const std::string& name, const bool loop);
+    void StopAll();
 
 private:
     SoundManager() = default;

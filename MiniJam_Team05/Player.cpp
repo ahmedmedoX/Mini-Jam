@@ -35,7 +35,7 @@ void Player::SetFixture() {
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &boxShape;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
+    fixtureDef.friction = 7.0f;
     fixtureDef.filter = filter;
 
     body->CreateFixture(&fixtureDef);
@@ -159,12 +159,12 @@ void Player::BeginContact(b2Contact* contact) {
     //}
 
     if (cA == SPIKE && cB == PLAYER) {
-        std::cout << "Player hit spikes!" << std::endl;
+        //std::cout << "Player hit spikes!" << std::endl;
         is_Player_Lost = true;
         return;
     }
     else if (cA == PLAYER && cB == SPIKE) {
-        std::cout << "Player hit spikes!" << std::endl;
+        //std::cout << "Player hit spikes!" << std::endl;
         is_Player_Lost = true;
         return;
     }
@@ -177,24 +177,24 @@ void Player::BeginContact(b2Contact* contact) {
     //}
 
     if (cA == DOOR && cB == PLAYER) {
-        std::cout << "Player reached the door!" << std::endl;
+        //std::cout << "Player reached the door!" << std::endl;
         if (is_Key_Collected)
             is_Door_Opened = true;
-        return;
+        //return;
     }
     else if (cA == PLAYER && cB == DOOR) {
-        std::cout << "Player reached the door!" << std::endl;
+        //std::cout << "Player reached the door!" << std::endl;
         if (is_Key_Collected)
             is_Door_Opened = true;
-        return;
+        //return;
     }
 
     if (cA == BOX) {
-        std::cout << "Player interacting with box" << std::endl;
+        //std::cout << "Player interacting with box" << std::endl;
         boxBody = fA->GetBody();
         interacting = true;
     }else if (cB == BOX) {
-        std::cout << "Player interacting with box" << std::endl;
+        //std::cout << "Player interacting with box" << std::endl;
         boxBody = fB->GetBody();
         interacting = true;
     }
@@ -206,17 +206,17 @@ void Player::BeginContact(b2Contact* contact) {
 
     if (cA == KEY && cB == PLAYER) {
         is_Key_Collected = true;
-        std::cout << "Player collected a key!" << std::endl;
+        //std::cout << "Player collected a key!" << std::endl;
     }
     else if (cA == PLAYER && cB == KEY) {
         is_Key_Collected = true;
-        std::cout << "Player collected a key!" << std::endl;
+        //std::cout << "Player collected a key!" << std::endl;
     }
 
     if (fA == footSensor || fB == footSensor) {
         footContacts++;
         onGround = true;
-        std::cout << "Player on ground" << std::endl;
+        //std::cout << "Player on ground" << std::endl;
     }
 }
 
@@ -251,6 +251,10 @@ bool Player::isDoorOpened() {
     if (is_Key_Collected && is_Door_Opened)
         return true;
     return false;
+}
+
+Vector2f Player::GetPosition(){
+    return sprite.getPosition();
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {

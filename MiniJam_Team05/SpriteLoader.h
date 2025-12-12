@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <iostream>
 #include <map>
 
 enum SpriteType {
@@ -37,6 +36,7 @@ enum SpriteType {
 	Quit,
 	Next,
 	Restart,
+	Win_Text,
 
     Null
 };

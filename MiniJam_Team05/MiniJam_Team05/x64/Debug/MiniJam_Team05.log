@@ -1,2 +1,3 @@
-﻿  Level_Rock.cpp
+﻿  GameManager.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\GameManager.cpp(238,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   MiniJam_Team05.vcxproj -> D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\x64\Debug\MiniJam_Team05.exe

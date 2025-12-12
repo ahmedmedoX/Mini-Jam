@@ -11,7 +11,6 @@ public:
     BoxCollider(const float width, const float height, const float friction,
         b2World& world, const b2Vec2 Position, const bool dynamic,
         ObjectType type);
-        //const unsigned int categoryBits
     ~BoxCollider();
     b2Vec2 GetPosition();
     float GetAngle();

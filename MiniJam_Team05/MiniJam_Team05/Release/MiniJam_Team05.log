@@ -1,25 +1,44 @@
-﻿  DeadScreen.cpp
+﻿  Animation.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:         with
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:         [
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:             T=int
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(11,38): warning C4244:         ]
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:         with
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:         [
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:             T=int
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Animation.cpp(12,39): warning C4244:         ]
+  Background.cpp
+  BoxCollider.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\BoxCollider.cpp(23,29): warning C4305: 'argument': truncation from 'double' to 'float'
+  DeadScreen.cpp
   Door.cpp
+  FinalMenu.cpp
   Game.cpp
   GameManager.cpp
-D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\GameManager.cpp(127,29): warning C4018: '<': signed/unsigned mismatch
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\GameManager.cpp(226,29): warning C4018: '<': signed/unsigned mismatch
+  GameObject.cpp
   Key.cpp
   Level.cpp
-D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level.cpp(62,23): warning C4018: '<': signed/unsigned mismatch
-D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level.cpp(72,23): warning C4018: '<': signed/unsigned mismatch
 D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level.cpp(80,23): warning C4018: '<': signed/unsigned mismatch
 D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level.cpp(90,23): warning C4018: '<': signed/unsigned mismatch
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level.cpp(98,23): warning C4018: '<': signed/unsigned mismatch
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Level.cpp(108,23): warning C4018: '<': signed/unsigned mismatch
   Level_Forest.cpp
   Level_Lava.cpp
   Level_Rock.cpp
   MainMenu.cpp
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\MainMenu.cpp(34,54): warning C4244: 'argument': conversion from 'float' to 'sf::Uint8', possible loss of data
   Player.cpp
 D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Player.cpp(72,60): warning C4305: 'argument': truncation from 'double' to 'const float'
   Rotator.cpp
   SoundManager.cpp
   Spike.cpp
   SpriteLoader.cpp
+  Compiling...
   UIBtn.cpp
+  Utilities.cpp
   WinScreen.cpp
 Animation.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Vector2<unsigned int> __thiscall sf::Texture::getSize(void)const " (__imp_?getSize@Texture@sf@@QBE?AV?$Vector2@I@2@XZ)
 Background.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::RenderStates const sf::RenderStates::Default" (__imp_?Default@RenderStates@sf@@2V12@B)
@@ -39,20 +58,32 @@ BoxCollider.obj : error LNK2001: unresolved external symbol "public: __thiscall 
 BoxCollider.obj : error LNK2001: unresolved external symbol "public: class b2Fixture * __thiscall b2Body::CreateFixture(struct b2FixtureDef const *)" (?CreateFixture@b2Body@@QAEPAVb2Fixture@@PBUb2FixtureDef@@@Z)
 BoxCollider.obj : error LNK2001: unresolved external symbol "public: void __thiscall b2World::DestroyBody(class b2Body *)" (?DestroyBody@b2World@@QAEXPAVb2Body@@@Z)
 BoxCollider.obj : error LNK2001: unresolved external symbol "public: class b2Body * __thiscall b2World::CreateBody(struct b2BodyDef const *)" (?CreateBody@b2World@@QAEPAVb2Body@@PBUb2BodyDef@@@Z)
-DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setPosition(float,float)" (__imp_?setPosition@Transformable@sf@@QAEXMM@Z)
-DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class sf::Rect<int> const &)" (__imp_?loadFromFile@Texture@sf@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$Rect@H@2@@Z)
-DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::~Texture(void)" (__imp_??1Texture@sf@@QAE@XZ)
-DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::Texture(void)" (__imp_??0Texture@sf@@QAE@XZ)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::CircleShape::setRadius(float)" (__imp_?setRadius@CircleShape@sf@@QAEXM@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::CircleShape::CircleShape(float,unsigned int)" (__imp_??0CircleShape@sf@@QAE@MI@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setOrigin(float,float)" (__imp_?setOrigin@Transformable@sf@@QAEXMM@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setScale(class sf::Vector2<float> const &)" (__imp_?setScale@Transformable@sf@@QAEXABV?$Vector2@M@2@@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RenderStates::RenderStates(struct sf::BlendMode const &)" (__imp_??0RenderStates@sf@@QAE@ABUBlendMode@1@@Z)
 DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Color::Color(unsigned char,unsigned char,unsigned char,unsigned char)" (__imp_??0Color@sf@@QAE@EEEE@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Transparent" (__imp_?Transparent@Color@sf@@2V12@B)
 DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Vector2<float> __thiscall sf::RenderTarget::mapPixelToCoords(class sf::Vector2<int> const &)const " (__imp_?mapPixelToCoords@RenderTarget@sf@@QBE?AV?$Vector2@M@2@ABV?$Vector2@H@2@@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTarget::clear(class sf::Color const &)" (__imp_?clear@RenderTarget@sf@@QAEXABVColor@2@@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Texture const & __thiscall sf::RenderTexture::getTexture(void)const " (__imp_?getTexture@RenderTexture@sf@@QBEABVTexture@2@XZ)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTexture::display(void)" (__imp_?display@RenderTexture@sf@@QAEXXZ)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::RenderTexture::create(unsigned int,unsigned int,struct sf::ContextSettings const &)" (__imp_?create@RenderTexture@sf@@QAE_NIIABUContextSettings@2@@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::RenderTexture::~RenderTexture(void)" (__imp_??1RenderTexture@sf@@UAE@XZ)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::RenderTexture::RenderTexture(void)" (__imp_??0RenderTexture@sf@@QAE@XZ)
 DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Shape::setFillColor(class sf::Color const &)" (__imp_?setFillColor@Shape@sf@@QAEXABVColor@2@@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) struct sf::BlendMode const sf::BlendNone" (__imp_?BlendNone@sf@@3UBlendMode@1@B)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setColor(class sf::Color const &)" (__imp_?setColor@Sprite@sf@@QAEXABVColor@2@@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setTexture(class sf::Texture const &,bool)" (__imp_?setTexture@Sprite@sf@@QAEXABVTexture@2@_N@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(void)" (__imp_??0Sprite@sf@@QAE@XZ)
 DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Vector2<int> __cdecl sf::Mouse::getPosition(class sf::WindowBase const &)" (__imp_?getPosition@Mouse@sf@@SA?AV?$Vector2@H@2@ABVWindowBase@2@@Z)
 DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::RectangleShape & __thiscall sf::RectangleShape::operator=(class sf::RectangleShape &&)" (__imp_??4RectangleShape@sf@@QAEAAV01@$$QAV01@@Z)
-Door.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setOrigin(float,float)" (__imp_?setOrigin@Transformable@sf@@QAEXMM@Z)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::Sprite::~Sprite(void)" (__imp_??1Sprite@sf@@UAE@XZ)
+DeadScreen.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::CircleShape::~CircleShape(void)" (__imp_??1CircleShape@sf@@UAE@XZ)
 Door.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Transformable::setScale(float,float)" (__imp_?setScale@Transformable@sf@@QAEXMM@Z)
-Door.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setTexture(class sf::Texture const &,bool)" (__imp_?setTexture@Sprite@sf@@QAEXABVTexture@2@_N@Z)
-Door.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sprite::Sprite(void)" (__imp_??0Sprite@sf@@QAE@XZ)
-Door.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::Sprite::~Sprite(void)" (__imp_??1Sprite@sf@@UAE@XZ)
+Door.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::Texture(void)" (__imp_??0Texture@sf@@QAE@XZ)
+FinalMenu.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setTextureRect(class sf::Rect<int> const &)" (__imp_?setTextureRect@Sprite@sf@@QAEXABV?$Rect@H@2@@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "public: void __thiscall b2World::Step(float,int,int)" (?Step@b2World@@QAEXMHH@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "public: void __thiscall b2World::SetContactListener(class b2ContactListener *)" (?SetContactListener@b2World@@QAEXPAVb2ContactListener@@@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "public: __thiscall b2World::~b2World(void)" (??1b2World@@QAE@XZ)
@@ -67,18 +98,16 @@ GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimpor
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Vector2<unsigned int> __thiscall sf::Image::getSize(void)const " (__imp_?getSize@Image@sf@@QBE?AV?$Vector2@I@2@XZ)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Image::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (__imp_?loadFromFile@Image@sf@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Image::Image(void)" (__imp_??0Image@sf@@QAE@XZ)
+GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static class sf::Color const sf::Color::Black" (__imp_?Black@Color@sf@@2V12@B)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Window::display(void)" (__imp_?display@Window@sf@@QAEXXZ)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Window::setFramerateLimit(unsigned int)" (__imp_?setFramerateLimit@Window@sf@@QAEXI@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::WindowBase::setIcon(unsigned int,unsigned int,unsigned char const *)" (__imp_?setIcon@WindowBase@sf@@QAEXIIPBE@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::WindowBase::pollEvent(class sf::Event &)" (__imp_?pollEvent@WindowBase@sf@@QAE_NAAVEvent@2@@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::WindowBase::isOpen(void)const " (__imp_?isOpen@WindowBase@sf@@QBE_NXZ)
-GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::RenderTarget::clear(class sf::Color const &)" (__imp_?clear@RenderTarget@sf@@QAEXABVColor@2@@Z)
-GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static bool __cdecl sf::Keyboard::isKeyPressed(enum sf::Keyboard::Key)" (__imp_?isKeyPressed@Keyboard@sf@@SA_NW4Key@12@@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::String::String(char const *,class std::locale const &)" (__imp_??0String@sf@@QAE@PBDABVlocale@std@@@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::VideoMode::VideoMode(unsigned int,unsigned int,unsigned int)" (__imp_??0VideoMode@sf@@QAE@III@Z)
 GameManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::String::~String(void)" (__imp_??1String@sf@@QAE@XZ)
 Key.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Vector2<float> const & __thiscall sf::Transformable::getPosition(void)const " (__imp_?getPosition@Transformable@sf@@QBEABV?$Vector2@M@2@XZ)
-Key.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sprite::setTextureRect(class sf::Rect<int> const &)" (__imp_?setTextureRect@Sprite@sf@@QAEXABV?$Rect@H@2@@Z)
 Level.obj : error LNK2001: unresolved external symbol "struct b2Vec2 const b2Vec2_zero" (?b2Vec2_zero@@3Ub2Vec2@@B)
 Player.obj : error LNK2001: unresolved external symbol "public: void __thiscall b2PolygonShape::SetAsBox(float,float,struct b2Vec2 const &,float)" (?SetAsBox@b2PolygonShape@@QAEXMMABUb2Vec2@@M@Z)
 Player.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Vector2<float> const & __thiscall sf::Transformable::getScale(void)const " (__imp_?getScale@Transformable@sf@@QBEABV?$Vector2@M@2@XZ)
@@ -91,9 +120,12 @@ SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimpo
 SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::SoundBuffer::~SoundBuffer(void)" (__imp_??1SoundBuffer@sf@@QAE@XZ)
 SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::SoundBuffer::SoundBuffer(void)" (__imp_??0SoundBuffer@sf@@QAE@XZ)
 SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Sound & __thiscall sf::Sound::operator=(class sf::Sound const &)" (__imp_??4Sound@sf@@QAEAAV01@ABV01@@Z)
+SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sound::setLoop(bool)" (__imp_?setLoop@Sound@sf@@QAEX_N@Z)
 SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: void __thiscall sf::Sound::setBuffer(class sf::SoundBuffer const &)" (__imp_?setBuffer@Sound@sf@@QAEXABVSoundBuffer@2@@Z)
 SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: virtual __thiscall sf::Sound::~Sound(void)" (__imp_??1Sound@sf@@UAE@XZ)
 SoundManager.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Sound::Sound(void)" (__imp_??0Sound@sf@@QAE@XZ)
+SpriteLoader.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: bool __thiscall sf::Texture::loadFromFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class sf::Rect<int> const &)" (__imp_?loadFromFile@Texture@sf@@QAE_NABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$Rect@H@2@@Z)
+SpriteLoader.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: __thiscall sf::Texture::~Texture(void)" (__imp_??1Texture@sf@@QAE@XZ)
 UIBtn.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: class sf::Rect<float> __thiscall sf::Shape::getGlobalBounds(void)const " (__imp_?getGlobalBounds@Shape@sf@@QBE?AV?$Rect@M@2@XZ)
 UIBtn.obj : error LNK2001: unresolved external symbol "__declspec(dllimport) public: static bool __cdecl sf::Mouse::isButtonPressed(enum sf::Mouse::Button)" (__imp_?isButtonPressed@Mouse@sf@@SA_NW4Button@12@@Z)
-D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Release\MiniJam_Team05.exe : fatal error LNK1120: 75 unresolved externals
+D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\MiniJam_Team05\Release\MiniJam_Team05.exe : fatal error LNK1120: 88 unresolved externals

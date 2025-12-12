@@ -6,6 +6,7 @@
 class Door : public BoxCollider {
 	Texture* texture = new Texture();
 	Sprite sprite;
+	RectangleShape collision;
 public:
 	Door(b2World& world, const b2Vec2 position);
 	void Update();
