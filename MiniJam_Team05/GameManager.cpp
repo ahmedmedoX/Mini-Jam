@@ -195,6 +195,7 @@ void GameManager::Win() {
 
 void GameManager::Death() {
     RestartLevel();
+    state = PLAY;
 }
 
 GameManager::~GameManager() {}

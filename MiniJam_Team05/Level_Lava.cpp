@@ -15,6 +15,12 @@ Level_Lava::Level_Lava(b2World& world) :
 
     Level_Door = make_unique<Door>(world,
         Utilities::Convert_SFML_Box2D_Space(Vector2f(500, 500)));
+
+    Environment.push_back(make_unique<GameObject>(
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 600)),
+        world, 64.f / Utilities::PIXELS_PER_UNIT, 64.f / Utilities::PIXELS_PER_UNIT,
+        BOX, 2));
+
 }
 
 Level_Lava::~Level_Lava() {}

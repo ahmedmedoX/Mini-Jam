@@ -29,7 +29,6 @@ void UIBtn::OnClick(sf::Vector2f mousePosition) {
         if (onClickCallback)
             onClickCallback();
     }
-
     if (!pressing)
         isClicked = false;
 }
