@@ -1,25 +1,20 @@
 #pragma once
 #include "Utilities.h"
 #include "UIBtn.h"
-#include "SoundManager.h"
+#include "SpriteLoader.h"
+#include "FilePathes.h"
 
-class DeadScreen
-{
-private:
+class DeadScreen {
     RectangleShape Background;
 
-    sf::Texture RetryTexture;
-    sf::Texture MenuTexture;
-
-    UIBtn RetryBtn;
+    UIBtn RestartBtn;
     UIBtn MenuBtn;
-
 
     void MenuBtnClicked();
     void RestartBtnClicked();
 
 public:
-    DeadScreen(sf::Window& window);
-    void Update(sf::RenderWindow& window);
-    void Draw(sf::RenderWindow& window);
+    DeadScreen();
+    void Update(RenderWindow& window);
+    void Draw(RenderWindow& window);
 };

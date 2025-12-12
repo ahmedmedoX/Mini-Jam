@@ -11,6 +11,11 @@ Level_Rock::Level_Rock(b2World& world) :
         2.0f, false, GROUND));
 
     Environment.push_back(make_unique<GameObject>(
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(384, 64 * 2.5f)),
+        world, 64.f / Utilities::PIXELS_PER_UNIT, 128.f / Utilities::PIXELS_PER_UNIT,
+        2.0f, false, GROUND));
+
+    Environment.push_back(make_unique<GameObject>(
         Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 600)),
         world, 64.f / Utilities::PIXELS_PER_UNIT, 64.f / Utilities::PIXELS_PER_UNIT,
         BOX, 1));

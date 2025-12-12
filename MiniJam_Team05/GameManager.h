@@ -37,7 +37,7 @@ class GameManager {
     Control control;
 
     MainMenu* mainMenu;
-    //DeadScreen* deadScreen;
+    DeadScreen* deadScreen;
     //WinScreen* winScreen;
 
     void HandleInput();

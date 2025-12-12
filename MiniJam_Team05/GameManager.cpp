@@ -31,6 +31,7 @@ GameManager::GameManager()
 
     mainMenu = new MainMenu(m_window);
     state = MENU;
+    //deadScreen = new DeadScreen();
 }
 
 void GameManager::Run() {
@@ -101,12 +102,12 @@ void GameManager::Update() {
             }
             if (m_currentLevel)
                 m_currentLevel->Update(m_deltaTime, m_rotationClock, *m_world);
-
             if (player)
                 player->Update(dir, control, m_deltaTime);
             break;
         }
         case (DEATH): {
+            deadScreen->Update(m_window);
             Death();
             break;
         }
@@ -133,6 +134,7 @@ void GameManager::Draw() {
             break;
         }
         case (DEATH): {
+            deadScreen->Draw(m_window);
             Death();
             break;
         }
@@ -194,6 +196,15 @@ void GameManager::Win() {
 }
 
 void GameManager::Death() {
+    //if (TotalTime < 5.0f) {
+    //    if ((TotalTime /= 5.0f / 2) < 1) {
+    //        Scale = ((5.0f / 2) * (TotalTime * TotalTime));
+    //    }
+    //    else {
+    //        Scale = -5.0f / 2 * (((TotalTime - 2) * (--TotalTime)) - 1);
+    //    }
+    //    Win_Screen.setScale(Vector2f(Scale, Scale));
+    //}
     RestartLevel();
     state = PLAY;
 }
