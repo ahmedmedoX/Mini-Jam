@@ -15,8 +15,8 @@ GameManager::GameManager()
     player = std::make_unique<Player>(*m_world,
         Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
 
+    m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Lava>(world); } });
     m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Rock>(world);}});
-    m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Lava>(world);}});
     m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Forest>(world);}});
 
     m_deltaTime = 0.f;

@@ -180,13 +180,13 @@ void Player::BeginContact(b2Contact* contact) {
         std::cout << "Player reached the door!" << std::endl;
         if (is_Key_Collected)
             is_Door_Opened = true;
-        return;
+       // return;
     }
     else if (cA == PLAYER && cB == DOOR) {
         std::cout << "Player reached the door!" << std::endl;
         if (is_Key_Collected)
             is_Door_Opened = true;
-        return;
+      //  return;
     }
 
     if (cA == BOX) {

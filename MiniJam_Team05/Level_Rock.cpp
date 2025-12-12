@@ -22,7 +22,7 @@ Level_Rock::Level_Rock(b2World& world) :
         Utilities::Convert_SFML_Box2D_Space(Vector2f(500, 700)));
 
     Spikes.push_back(make_unique<Spike>(world,
-        Utilities::Convert_SFML_Box2D_Space(Vector2f(450, 500)), 0));
+        Utilities::Convert_SFML_Box2D_Space(Vector2f(450, 500)),90, 0));
 }
 
 Level_Rock::~Level_Rock() {}
