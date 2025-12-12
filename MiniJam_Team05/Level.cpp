@@ -1,8 +1,8 @@
 #include "Level.h"
 #include "FilePathes.h"
 
-Level::Level(b2World &world, Texture* Background_Texture) :
-    Level_Background(Background_Texture)
+Level::Level(b2World &world, Texture* Level_Texture, Texture* Background_Texture) :
+    Level_Background(Level_Texture, Background_Texture)
 {
     Environment.push_back(std::make_unique<GameObject>(
         Utilities::Convert_SFML_Box2D_Space(Vector2f(Utilities::WINDOW_WIDTH / 2, Utilities::WINDOW_HEIGHT - 80)),

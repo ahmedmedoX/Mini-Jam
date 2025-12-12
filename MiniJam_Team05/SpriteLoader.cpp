@@ -11,8 +11,7 @@ sf::Texture& SpriteLoader::getTexture(SpriteType spriteType) {
     auto& tex = textures[spriteType];
     std::string path;
 
-    switch (spriteType)
-    {
+    switch (spriteType) {
     case SpriteType::playerIdle: path = FilePathes::playerIdle; break;
     case SpriteType::playerRun:  path = FilePathes::playerRun;  break;
     case SpriteType::playerPush: path = FilePathes::playerPush; break;
@@ -23,16 +22,29 @@ sf::Texture& SpriteLoader::getTexture(SpriteType spriteType) {
     case SpriteType::box1Sprite:  path = FilePathes::box1Sprite;  break;
     case SpriteType::box2Sprite:  path = FilePathes::box2Sprite;  break;
     case SpriteType::box3Sprite:  path = FilePathes::box3Sprite;  break;
+
     case SpriteType::spike1Sprite:  path = FilePathes::spike1Sprite;  break;
     case SpriteType::spike2Sprite:  path = FilePathes::spike2Sprite;  break;
     case SpriteType::spike3Sprite:  path = FilePathes::spike3Sprite;  break;
+
     case SpriteType::keyIdle:  path = FilePathes::keyIdle;  break;
     case SpriteType::sparkleSprite:  path = FilePathes::sparkleSprite;  break;
+
     case SpriteType::doorSprite:  path = FilePathes::doorSprite;  break;
 
-    case SpriteType::Level1:  path = FilePathes::Level1_Background;  break;
-    case SpriteType::Level2:  path = FilePathes::Level2_Background;  break;
-    case SpriteType::Level3:  path = FilePathes::Level3_Background;  break;
+    case SpriteType::Level1:  path = FilePathes::Level1;  break;
+    case SpriteType::Level2:  path = FilePathes::Level2;  break;
+    case SpriteType::Level3:  path = FilePathes::Level3;  break;
+    case SpriteType::Level1_Background:  path = FilePathes::Level1_Background;  break;
+    case SpriteType::Level2_Background:  path = FilePathes::Level2_Background;  break;
+    case SpriteType::Level3_Background:  path = FilePathes::Level3_Background;  break;
+
+    case SpriteType::SplashScreen:  path = FilePathes::SplashScreen;  break;
+    case SpriteType::Menu:  path = FilePathes::Menu_Button;  break;
+    case SpriteType::Start:  path = FilePathes::Start_Button;  break;
+    case SpriteType::Quit:  path = FilePathes::Quit_Button;  break;
+    case SpriteType::Next:  path = FilePathes::Next_Button;  break;
+    case SpriteType::Restart:  path = FilePathes::Restart_Button;  break;
     }
 
     if (!tex.loadFromFile(path))

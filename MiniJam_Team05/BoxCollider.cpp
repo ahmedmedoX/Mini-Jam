@@ -14,9 +14,8 @@ BoxCollider::BoxCollider(const float width,
     shape.SetAsBox((width / 2), (height / 2));
     fixtureDef.shape = &shape;
 
-
-    fixtureDef.friction = friction;
-    fixtureDef.density = dynamic ? 1.0f : 0.0f;
+    fixtureDef.friction = dynamic ? 0.3f : friction;
+    fixtureDef.density = dynamic ? 10.0f : 0.0f;
     fixtureDef.filter.categoryBits = type;
     fixtureDef.filter.maskBits = 0xFFFF;
 

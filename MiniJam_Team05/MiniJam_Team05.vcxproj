@@ -83,7 +83,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;box2d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -101,7 +101,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window.lib;sfml-system.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-window.lib;sfml-system.lib;sfml-graphics.lib;box2d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,7 +117,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;box2d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,32 +135,39 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\Box2D\library;D:\ITI\Game Programming Intake 46\Mini Jam\Mini-Jam\SFML\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-window.lib;sfml-system.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-audio.lib;sfml-window.lib;sfml-system.lib;sfml-graphics.lib;box2d.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="DeadScreen.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Enums.cpp" />
-    <ClCompile Include="FileName.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Key.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Level_Forest.cpp" />
+    <ClCompile Include="Level_Lava.cpp" />
     <ClCompile Include="Level_Rock.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rotator.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spike.cpp" />
     <ClCompile Include="SpriteLoader.cpp" />
+    <ClCompile Include="UIBtn.cpp" />
     <ClCompile Include="Utilities.cpp" />
+    <ClCompile Include="WinScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="DeadScreen.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="FilePathes.h" />
@@ -170,12 +177,17 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelData.h" />
     <ClInclude Include="Level_Forest.h" />
+    <ClInclude Include="Level_Lava.h" />
     <ClInclude Include="Level_Rock.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rotator.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spike.h" />
     <ClInclude Include="SpriteLoader.h" />
+    <ClInclude Include="UIBtn.h" />
     <ClInclude Include="Utilities.h" />
+    <ClInclude Include="WinScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

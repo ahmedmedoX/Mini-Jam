@@ -1,7 +1,7 @@
 #include "Spike.h"
 
 Spike::Spike(b2World& world, const b2Vec2 position, const int Level_Index)
-    : BoxCollider(32 / Utilities::PIXELS_PER_UNIT, 32 / Utilities::PIXELS_PER_UNIT,
+    : BoxCollider(32 / Utilities::PIXELS_PER_UNIT, 2 / Utilities::PIXELS_PER_UNIT,
         0.3f, world, position, false, SPIKE)
 {
     switch (Level_Index) {

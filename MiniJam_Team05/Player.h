@@ -39,7 +39,7 @@ class Player : public Drawable, public b2ContactListener {
 	Sprite sprite;
 
 	const Vector2f size = Vector2f(32.f, 48.f);
-	const float walkVelocity = 80.0f / Utilities::PIXELS_PER_UNIT;
+	const float walkVelocity = 100.0f / Utilities::PIXELS_PER_UNIT;
 	const float fallVelocity = 80.0f / Utilities::PIXELS_PER_UNIT;
 	const float animationRate = 0.4f;
 

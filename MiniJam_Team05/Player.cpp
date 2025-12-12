@@ -87,7 +87,7 @@ void Player::Update(Direction dir, Control control, float deltaTime) {
 
     if (control == INTERACT && interacting && boxBody && onGround) {
         if (dirX != 0) {
-            float gravity = 9.8;
+            float gravity = 10;
 
             float force = boxBody->GetMass() * gravity * 0.52f;
             float drag = body->GetMass() * gravity * 0.52f;
@@ -152,15 +152,40 @@ void Player::BeginContact(b2Contact* contact) {
     uint16 cA = fA->GetFilterData().categoryBits;
     uint16 cB = fB->GetFilterData().categoryBits;
 
-    if (cA == SPIKE || cB == SPIKE) {
+    //if (cA == SPIKE || cB == SPIKE) {
+    //    std::cout << "Player hit spikes!" << std::endl;
+    //    is_Player_Lost = true;
+    //    return;
+    //}
+
+    if (cA == SPIKE && cB == PLAYER) {
+        std::cout << "Player hit spikes!" << std::endl;
+        is_Player_Lost = true;
+        return;
+    }
+    else if (cA == PLAYER && cB == SPIKE) {
         std::cout << "Player hit spikes!" << std::endl;
         is_Player_Lost = true;
         return;
     }
 
-    if (cA == DOOR || cB == DOOR) {
+    //if (cA == DOOR || cB == DOOR) {
+    //    std::cout << "Player reached the door!" << std::endl;
+    //    if (is_Key_Collected)
+    //        is_Door_Opened = true;
+    //    return;
+    //}
+
+    if (cA == DOOR && cB == PLAYER) {
         std::cout << "Player reached the door!" << std::endl;
-        is_Door_Opened = true;
+        if (is_Key_Collected)
+            is_Door_Opened = true;
+        return;
+    }
+    else if (cA == PLAYER && cB == DOOR) {
+        std::cout << "Player reached the door!" << std::endl;
+        if (is_Key_Collected)
+            is_Door_Opened = true;
         return;
     }
 
@@ -174,7 +199,16 @@ void Player::BeginContact(b2Contact* contact) {
         interacting = true;
     }
 
-    if (cA == KEY || cB == KEY) {
+    //if (cA == KEY || cB == KEY) {
+    //    is_Key_Collected = true;
+    //    std::cout << "Player collected a key!" << std::endl;
+    //}
+
+    if (cA == KEY && cB == PLAYER) {
+        is_Key_Collected = true;
+        std::cout << "Player collected a key!" << std::endl;
+    }
+    else if (cA == PLAYER && cB == KEY) {
         is_Key_Collected = true;
         std::cout << "Player collected a key!" << std::endl;
     }

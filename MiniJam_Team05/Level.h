@@ -14,7 +14,7 @@ class Level {
     float targetRotation;
     float totalRotation;
     const float rotationSpeed = 0.8f;
-    const float rotationDelay = 3.0f;
+    const float rotationDelay = 5.0f;
     const float rotationAngle = Utilities::Degree_to_Radian(90.0f);
 
 protected:
@@ -24,7 +24,7 @@ protected:
     unique_ptr<Door> Level_Door;
 
 public:
-    Level(b2World& world, Texture* Background_Texture);
+    Level(b2World& world, Texture* Background_Texture, Texture* Level_Texture);
     ~Level();
 
     void Update(const float deltaTime, Clock& RotationClock, b2World& world);

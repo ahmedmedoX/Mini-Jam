@@ -1,9 +1,17 @@
 #pragma once
 #include "Level_Rock.h"
 #include "Level_Forest.h"
+#include "Level_Lava.h"
 #include "LevelData.h"
+
 #include "Player.h"
+
 #include "FilePathes.h"
+
+#include "MainMenu.h"
+#include "DeadScreen.h"
+#include "WinScreen.h"
+
 #include <list>
 
 class GameManager {
@@ -11,6 +19,8 @@ class GameManager {
     Clock m_deltaClock;
     Clock m_rotationClock;
     float m_deltaTime;
+
+    GameState state;
 
     unique_ptr<b2World> m_world;
     const float timeStep = 1.0f / (float)Utilities::FPS;
@@ -26,12 +36,16 @@ class GameManager {
     Direction dir;
     Control control;
 
+    MainMenu* mainMenu;
+    //DeadScreen* deadScreen;
+    //WinScreen* winScreen;
+
     void HandleInput();
     void Update();
     void Draw();
     void SwitchLevel(const int index);
     void RestartLevel();
-    bool CheckLevelWin();
+    void CheckLevelWin();
     void CheckLevelLose();
     void Win();
     void Death();

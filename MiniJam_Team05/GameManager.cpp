@@ -10,13 +10,13 @@ GameManager::GameManager()
     m_window.setFramerateLimit(Utilities::FPS);
     m_window.setIcon(icon->getSize().x, icon->getSize().y, icon->getPixelsPtr());
     
-    m_world = make_unique<b2World>(b2Vec2(0, -9.8f));
+    m_world = make_unique<b2World>(b2Vec2(0, -10.0f));
 
     player = std::make_unique<Player>(*m_world,
         Utilities::Convert_SFML_Box2D_Space(Vector2f(400, 400)));
 
     m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Rock>(world);}});
-    //m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Lava>(world);}});
+    m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Lava>(world);}});
     m_levelData.push_back({ [](b2World& world) {return make_unique<Level_Forest>(world);}});
 
     m_deltaTime = 0.f;
@@ -28,9 +28,10 @@ GameManager::GameManager()
 
     m_currentIndex = 0;
     m_currentLevel = m_levelData[m_currentIndex].factory(*m_world);
-}
 
-GameManager::~GameManager() {}
+    mainMenu = new MainMenu(m_window);
+    state = MENU;
+}
 
 void GameManager::Run() {
     while (m_window.isOpen()) {
@@ -55,30 +56,27 @@ void GameManager::HandleInput() {
     while (m_window.pollEvent(event)) {
         if (event.type == Event::Closed)
             m_window.close();
-
         if (event.type == sf::Event::KeyPressed) {
-
             if (event.key.code == sf::Keyboard::F) {
                 control = Control::INTERACT;
             }
-
-            if (event.key.code == sf::Keyboard::A) {
+            if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::Left) {
                 dir = Direction::LEFT;
-            }
-            else if (event.key.code == sf::Keyboard::D) {
+            } else if (event.key.code == sf::Keyboard::D || event.key.code == sf::Keyboard::Right) {
                 dir = Direction::RIGHT;
             }
         }
         if (event.type == sf::Event::KeyReleased) {
-            if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D) {
+            if (event.key.code == sf::Keyboard::A || event.key.code == sf::Keyboard::D ||
+                event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Right) {
                 dir = Direction::NOMOVE;
             }
-            if (event.key.code == sf::Keyboard::F || event.key.code == sf::Keyboard::Up) {
+            if (event.key.code == sf::Keyboard::F) {
                 control = Control::NONE;
             }
         }
     }
-    
+
     if (Keyboard::isKeyPressed(Keyboard::R)) {
         RestartLevel();
     }
@@ -89,28 +87,62 @@ void GameManager::HandleInput() {
 }
 
 void GameManager::Update() {
-    if (m_deltaClock.getElapsedTime().asSeconds() > timeStep) {
-        m_world->Step(timeStep, velocityIterations, positionIterations);
-        m_deltaTime = m_deltaClock.restart().asSeconds();
+    switch (state) {
+        case (MENU): {
+            if (mainMenu->StartGame())
+                state = PLAY;
+            mainMenu->Update(m_window);
+            break;
+        }
+        case (PLAY): {
+            if (m_deltaClock.getElapsedTime().asSeconds() > timeStep) {
+                m_world->Step(timeStep, velocityIterations, positionIterations);
+                m_deltaTime = m_deltaClock.restart().asSeconds();
+            }
+            if (m_currentLevel)
+                m_currentLevel->Update(m_deltaTime, m_rotationClock, *m_world);
+
+            if (player)
+                player->Update(dir, control, m_deltaTime);
+            break;
+        }
+        case (DEATH): {
+            Death();
+            break;
+        }
+        case (WIN): {
+            Win();
+            break;
+        }
+        default:
+            break;
     }
-    //lvl->Update(m_deltaTime, m_rotationClock, *m_world);
-
-    if (m_currentLevel)
-        m_currentLevel->Update(m_deltaTime, m_rotationClock, *m_world);
-
-    if (player)
-     player->Update(dir, control, m_deltaTime);
 }
 
 void GameManager::Draw() {
     m_window.clear();
-
-    if (m_currentLevel)
-        m_currentLevel->Draw(m_window);
-
-    //lvl->Draw(m_window);
-
-    m_window.draw(*player.get());
+    switch (state) {
+        case (MENU): {
+            mainMenu->Draw(m_window);
+            break;
+        }
+        case (PLAY): {
+            if (m_currentLevel)
+                m_currentLevel->Draw(m_window);
+            m_window.draw(*player.get());
+            break;
+        }
+        case (DEATH): {
+            Death();
+            break;
+        }
+        case (WIN): {
+            Win();
+            break;
+        }
+        default:
+            break;
+    }
     m_window.display();
 }
 
@@ -141,30 +173,28 @@ void GameManager::RestartLevel() {
 
 void GameManager::CheckLevelLose() {
     if (player->isPlayerLost())
-        RestartLevel();
+        state = DEATH;
 }
 
-bool GameManager::CheckLevelWin() {
-
-    if (!player->isKeyCollected())
-        return false;
-
-    m_currentLevel->CollectKey();
-
-    if (player->isDoorOpened()) {
-        int next = (m_currentIndex + 1) % m_levelData.size();
-        SwitchLevel(next);
-        RestartLevel();
+void GameManager::CheckLevelWin() {
+    if (player->isKeyCollected()) {
+        m_currentLevel->CollectKey();
+        if (player->isDoorOpened()) {
+            int next = (m_currentIndex + 1) % m_levelData.size();
+            SwitchLevel(next);
+            RestartLevel();
+        }
     }
-    return false;
 }
 
 void GameManager::Win() {
     // TODO: Replace with actual level win logic
     // Example: if player box reaches some position
-
+    cout << "WIN\n";
 }
 
 void GameManager::Death() {
-
+    RestartLevel();
 }
+
+GameManager::~GameManager() {}

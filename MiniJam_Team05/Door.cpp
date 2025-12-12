@@ -2,7 +2,7 @@
 
 Door::Door(b2World& world, const b2Vec2 position)
     : BoxCollider(48 / Utilities::PIXELS_PER_UNIT, 64 / Utilities::PIXELS_PER_UNIT,
-        0.3f, world, position, false, DOOR)
+        1.0f, world, position, false, DOOR)
 {
     texture = &SpriteLoader::getTexture(SpriteType::doorSprite);
     sprite.setTexture(*texture);
